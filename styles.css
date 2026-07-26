@@ -151,8 +151,12 @@ a {
   color: #dbeafe;
 }
 
-html[lang="en"] [data-korean-only] {
-  display: none;
+.hero-name-eyebrow {
+  margin-left: 0;
+  margin-bottom: 10px;
+  font-size: 16px;
+  line-height: 1.2;
+  text-transform: none;
 }
 
 h1,

@@ -13,6 +13,7 @@ const dictionary = {
       contact: "Contact",
     },
     hero: {
+      eyebrow: "한국이주이민연구소",
       title: "Korea Migration Institute",
       copy:
         "A research institute grounded in lived migration experience, led by migrants and people with first-hand migration experience to study migration realities and rights in Korea.",
