@@ -130,7 +130,7 @@ a {
   padding: 96px max(24px, calc((100vw - var(--max)) / 2)) 72px;
   background:
     linear-gradient(0deg, rgba(16, 24, 40, 0.78), rgba(16, 24, 40, 0.2)),
-    url("./assets/archive/20240706-incheon-migration-history-museum.jpg") center/cover;
+    url("./assets/archive/20240626-snu-childcare-activity.jpg") center 72%/cover;
   color: white;
 }
 
@@ -376,7 +376,7 @@ h3 {
 .work-diagram {
   position: relative;
   max-width: var(--max);
-  min-height: 560px;
+  min-height: 430px;
   margin-top: 18px;
   isolation: isolate;
 }
@@ -384,7 +384,7 @@ h3 {
 .work-diagram::before {
   content: "";
   position: absolute;
-  inset: 82px 28%;
+  inset: 58px 34%;
   border: 2px solid rgba(29, 78, 216, 0.18);
   border-radius: 50%;
   background: rgba(255, 255, 255, 0.5);
@@ -395,9 +395,9 @@ h3 {
   content: "";
   position: absolute;
   left: 50%;
-  top: 52%;
-  width: min(42vw, 430px);
-  height: min(42vw, 430px);
+  top: 50%;
+  width: min(32vw, 330px);
+  height: min(32vw, 330px);
   transform: translate(-50%, -50%) rotate(18deg);
   clip-path: polygon(50% 0, 98% 35%, 79% 92%, 21% 92%, 2% 35%);
   border: 1px solid rgba(16, 24, 40, 0.14);
@@ -408,11 +408,11 @@ h3 {
 .work-diagram-center {
   position: absolute;
   left: 50%;
-  top: 52%;
+  top: 50%;
   display: grid;
   place-items: center;
-  width: 124px;
-  height: 124px;
+  width: 112px;
+  height: 112px;
   transform: translate(-50%, -50%);
   border: 2px solid var(--ink);
   border-radius: 50%;
@@ -427,7 +427,7 @@ h3 {
 }
 
 .work-diagram-center strong {
-  font-size: 28px;
+  font-size: 26px;
   line-height: 1;
 }
 
@@ -442,9 +442,9 @@ h3 {
   position: absolute;
   display: grid;
   align-content: center;
-  width: min(24%, 250px);
-  min-height: 128px;
-  padding: 18px;
+  width: min(21%, 220px);
+  min-height: 104px;
+  padding: 16px;
   background: white;
   border: 1px solid var(--line);
   box-shadow: 0 8px 22px rgba(16, 24, 40, 0.07);
@@ -461,7 +461,7 @@ h3 {
 
 .work-node span {
   display: inline-flex;
-  margin-bottom: 12px;
+  margin-bottom: 8px;
   color: var(--green);
   font-size: 13px;
   font-weight: 850;
@@ -469,6 +469,7 @@ h3 {
 
 .work-node h3 {
   margin-bottom: 0;
+  font-size: 17px;
 }
 
 .node-research {
@@ -478,23 +479,23 @@ h3 {
 }
 
 .node-education {
-  right: 0;
-  top: 132px;
+  right: 14%;
+  top: 94px;
 }
 
 .node-rights {
-  right: 8%;
-  bottom: 0;
+  right: 21%;
+  bottom: 10px;
 }
 
 .node-counseling {
-  left: 8%;
-  bottom: 0;
+  left: 21%;
+  bottom: 10px;
 }
 
 .node-collaboration {
-  left: 0;
-  top: 132px;
+  left: 14%;
+  top: 94px;
 }
 
 .archive-section .section-heading p:not(.eyebrow) {
@@ -529,13 +530,6 @@ h3 {
 .archive-category-heading h3 {
   margin: 0;
   font-size: 24px;
-}
-
-.archive-category-heading span {
-  color: var(--muted);
-  font-size: 12px;
-  font-weight: 850;
-  text-transform: uppercase;
 }
 
 .archive-event {
