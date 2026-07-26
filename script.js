@@ -1,6 +1,9 @@
 const dictionary = {
   en: {
-    brand: { subtitle: "Research institute for migration, rights, and community" },
+    brand: {
+      title: "Korea Migration Institute",
+      subtitle: "Research institute for migration, rights, and community",
+    },
     nav: {
       about: "About",
       focus: "Focus",
@@ -136,7 +139,10 @@ const dictionary = {
       title: "Collaboration and inquiries",
       body: "For research collaboration, field case sharing, counseling referrals, or material requests, contact us below.",
     },
-    footer: { note: "Research · Advocacy · Community" },
+    footer: {
+      name: "Korea Migration Institute",
+      note: "Research · Advocacy · Community",
+    },
   },
 };
 
