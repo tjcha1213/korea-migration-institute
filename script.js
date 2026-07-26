@@ -68,8 +68,6 @@ const dictionary = {
     archive: {
       eyebrow: "Archive",
       title: "Activity Archive",
-      copy:
-        "A date-based record of education, care, cultural visits, and social contribution activities with photos.",
       groups: {
         parenting: "Parent Education",
         multicultural: "Multicultural Education",
