@@ -28,7 +28,7 @@ const dictionary = {
       eyebrow: "Focus Areas",
       title: "Related Fields",
       women: { title: "Migrant women", body: "Safety, immigration status, family relations, discrimination response, and self-reliance." },
-      children: { title: "Children and families", body: "Education, care, and welfare access for migrant-background children and families." },
+      children: { title: "Migrant-background children and families", body: "Education, care, and welfare access for migrant-background children and families." },
       irregular: { title: "Irregular labor migrants / undocumented workers", body: "Labor rights for irregular migrant workers, including Filipino and Southeast Asian communities." },
       refugees: { title: "Refugees", body: "Protection procedures, settlement, family unity, and community connections." },
       diaspora: { title: "Overseas Koreans", body: "Rights issues connecting Korean society and diaspora communities." },
@@ -38,10 +38,32 @@ const dictionary = {
     },
     work: {
       eyebrow: "What We Do",
-      title: "Research, rights guidance, and solidarity",
-      research: { title: "Policy research", body: "Briefs and reports based on institutional changes, field cases, and statistical data." },
-      guide: { title: "Rights guidance", body: "Accessible information on status, labor, family issues, and refugee procedures." },
-      network: { title: "Solidarity network", body: "Connection paths with lawyers, counselors, organizers, and local institutions." },
+      title: "Research, education, rights information, and referrals",
+      research: {
+        title: "Migration society research",
+        body:
+          "We conduct research on immigration, multicultural society, and migrants' lives and rights in Korea, publishing reports and materials based on field cases and statistical data.",
+      },
+      education: {
+        title: "Education and capacity building",
+        body:
+          "We run programs on migration-society understanding, cultural adaptation, rights, counseling, and multicultural education for migrants, migrant-background children and youth, families, teachers, counselors, and advocates.",
+      },
+      rights: {
+        title: "Rights information",
+        body:
+          "We provide accessible information on systems and rights that migrants need, including status, labor, family, education, medical care, and refugee procedures.",
+      },
+      counseling: {
+        title: "Counseling and case referrals",
+        body:
+          "We counsel migrants and migrant-background families on difficulties related to status, family, education, labor, and daily-life adaptation, and connect them to specialized institutions and support systems when needed.",
+      },
+      collaboration: {
+        title: "Research-field collaboration",
+        body:
+          "We collaborate with researchers, lawyers, counselors, teachers, advocates, and local institutions to connect research, education, counseling, and field practice.",
+      },
     },
     resources: {
       eyebrow: "Resources",
