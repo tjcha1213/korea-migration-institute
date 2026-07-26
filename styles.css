@@ -376,18 +376,18 @@ h3 {
 .work-diagram {
   position: relative;
   max-width: var(--max);
-  min-height: 430px;
-  margin-top: 18px;
+  min-height: 460px;
+  margin-top: 8px;
   isolation: isolate;
 }
 
 .work-diagram::before {
   content: "";
   position: absolute;
-  inset: 58px 34%;
-  border: 2px solid rgba(29, 78, 216, 0.18);
+  inset: 74px 31%;
+  border: 1px solid rgba(29, 78, 216, 0.18);
   border-radius: 50%;
-  background: rgba(255, 255, 255, 0.5);
+  background: rgba(255, 255, 255, 0.44);
   z-index: -1;
 }
 
@@ -396,12 +396,12 @@ h3 {
   position: absolute;
   left: 50%;
   top: 50%;
-  width: min(32vw, 330px);
-  height: min(32vw, 330px);
+  width: min(35vw, 360px);
+  height: min(35vw, 360px);
   transform: translate(-50%, -50%) rotate(18deg);
   clip-path: polygon(50% 0, 98% 35%, 79% 92%, 21% 92%, 2% 35%);
-  border: 1px solid rgba(16, 24, 40, 0.14);
-  background: linear-gradient(145deg, rgba(29, 78, 216, 0.08), rgba(15, 118, 110, 0.07));
+  border: 1px solid rgba(29, 78, 216, 0.16);
+  background: linear-gradient(145deg, rgba(29, 78, 216, 0.1), rgba(15, 118, 110, 0.08));
   z-index: -1;
 }
 
@@ -413,29 +413,31 @@ h3 {
   place-items: center;
   width: 112px;
   height: 112px;
+  padding: 10px;
   transform: translate(-50%, -50%);
-  border: 2px solid var(--ink);
-  border-radius: 50%;
+  border: 1px solid rgba(16, 24, 40, 0.18);
+  border-radius: 8px;
   background: white;
-  box-shadow: var(--shadow);
+  box-shadow: 0 16px 36px rgba(16, 24, 40, 0.14);
   text-align: center;
 }
 
 .work-diagram-center img {
-  width: 78px;
+  width: 100%;
   height: auto;
+  display: block;
 }
 
 .work-node {
   position: absolute;
   display: grid;
   align-content: center;
-  width: min(21%, 220px);
-  min-height: 104px;
+  width: min(22%, 230px);
+  min-height: 108px;
   padding: 16px;
   background: white;
-  border: 1px solid var(--line);
-  box-shadow: 0 8px 22px rgba(16, 24, 40, 0.07);
+  border: 1px solid rgba(29, 78, 216, 0.14);
+  box-shadow: 0 8px 22px rgba(16, 24, 40, 0.06);
   cursor: pointer;
   transition: border-color 160ms ease, box-shadow 160ms ease, transform 160ms ease;
 }
@@ -462,28 +464,28 @@ h3 {
 
 .node-research {
   left: 50%;
-  top: 0;
+  top: 8px;
   transform: translateX(-50%);
 }
 
 .node-education {
-  right: 14%;
-  top: 94px;
+  right: 11%;
+  top: 112px;
 }
 
 .node-rights {
-  right: 21%;
-  bottom: 10px;
+  right: 19%;
+  bottom: 16px;
 }
 
 .node-counseling {
-  left: 21%;
-  bottom: 10px;
+  left: 19%;
+  bottom: 16px;
 }
 
 .node-collaboration {
-  left: 14%;
-  top: 94px;
+  left: 11%;
+  top: 112px;
 }
 
 .archive-section .section-heading p:not(.eyebrow) {
