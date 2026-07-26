@@ -151,6 +151,10 @@ a {
   color: #dbeafe;
 }
 
+html[lang="en"] [data-korean-only] {
+  display: none;
+}
+
 h1,
 h2,
 h3,
@@ -569,13 +573,12 @@ h3 {
 
 .archive-content > .archive-location::before {
   content: "";
-  width: 0;
-  height: 0;
-  flex: 0 0 0;
-  border-left: 5px solid transparent;
-  border-right: 5px solid transparent;
-  border-top: 14px solid var(--blue);
-  border-radius: 8px 8px 2px 2px;
+  width: 10px;
+  height: 10px;
+  flex: 0 0 10px;
+  border-radius: 50% 50% 50% 2px;
+  background: var(--blue);
+  transform: rotate(-45deg);
 }
 
 .archive-photos {

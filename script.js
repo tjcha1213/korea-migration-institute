@@ -1,7 +1,7 @@
 const dictionary = {
   en: {
     brand: {
-      title: "Korea Migration Institute",
+      title: "Korea Migration Institute · 한국이주이민연구소",
       subtitle: "Research institute for migration, rights, and community",
     },
     nav: {
