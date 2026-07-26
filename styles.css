@@ -421,21 +421,9 @@ h3 {
   text-align: center;
 }
 
-.work-diagram-center strong,
-.work-diagram-center span {
-  display: block;
-}
-
-.work-diagram-center strong {
-  font-size: 26px;
-  line-height: 1;
-}
-
-.work-diagram-center span {
-  margin-top: 8px;
-  color: var(--muted);
-  font-size: 12px;
-  font-weight: 850;
+.work-diagram-center img {
+  width: 78px;
+  height: auto;
 }
 
 .work-node {

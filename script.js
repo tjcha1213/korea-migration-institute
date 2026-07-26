@@ -39,7 +39,6 @@ const dictionary = {
     work: {
       eyebrow: "What We Do",
       title: "Research, education, rights information, and referrals",
-      center: "Operating model",
       research: {
         title: "Migration society research",
         body:
