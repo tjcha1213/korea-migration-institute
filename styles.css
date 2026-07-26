@@ -28,6 +28,10 @@ body {
   line-height: 1.55;
 }
 
+body.modal-open {
+  overflow: hidden;
+}
+
 a {
   color: inherit;
   text-decoration: none;
@@ -240,6 +244,16 @@ h3 {
   border: 1px solid var(--line);
   background: white;
   box-shadow: 0 6px 18px rgba(16, 24, 40, 0.05);
+  cursor: pointer;
+  transition: border-color 160ms ease, box-shadow 160ms ease, transform 160ms ease;
+}
+
+.focus-card:hover,
+.focus-card:focus-visible {
+  border-color: rgba(29, 78, 216, 0.48);
+  box-shadow: 0 12px 26px rgba(16, 24, 40, 0.1);
+  transform: translateY(-2px);
+  outline: none;
 }
 
 .focus-card span {
@@ -257,6 +271,96 @@ h3 {
 
 .focus-card.paused {
   background: var(--soft);
+}
+
+.focus-modal[hidden] {
+  display: none;
+}
+
+.focus-modal {
+  position: fixed;
+  inset: 0;
+  z-index: 50;
+  display: grid;
+  place-items: center;
+  padding: 24px;
+}
+
+.focus-modal-backdrop {
+  position: absolute;
+  inset: 0;
+  background: rgba(16, 24, 40, 0.62);
+}
+
+.focus-modal-panel {
+  position: relative;
+  width: min(920px, 100%);
+  max-height: min(760px, calc(100vh - 48px));
+  overflow-y: auto;
+  padding: 34px;
+  background: white;
+  border: 1px solid var(--line);
+  box-shadow: 0 30px 80px rgba(16, 24, 40, 0.28);
+}
+
+.focus-modal-close {
+  position: absolute;
+  top: 18px;
+  right: 18px;
+  display: grid;
+  place-items: center;
+  width: 38px;
+  height: 38px;
+  border: 1px solid var(--line);
+  background: var(--soft);
+  color: var(--ink);
+  font-size: 26px;
+  line-height: 1;
+  cursor: pointer;
+}
+
+.focus-modal-close:hover,
+.focus-modal-close:focus-visible {
+  border-color: var(--ink);
+  outline: none;
+}
+
+.focus-modal-panel h2 {
+  max-width: 760px;
+  margin-bottom: 14px;
+  padding-right: 44px;
+  font-size: clamp(30px, 5vw, 54px);
+}
+
+.focus-modal-summary {
+  max-width: 760px;
+  color: var(--muted);
+  font-size: 18px;
+}
+
+.focus-modal-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 24px;
+  margin-top: 28px;
+}
+
+.focus-modal-grid > div {
+  padding: 22px;
+  border: 1px solid var(--line);
+  background: var(--soft);
+}
+
+.focus-modal-grid h3 {
+  margin-bottom: 14px;
+}
+
+.focus-modal-grid ul {
+  display: grid;
+  gap: 10px;
+  margin: 0;
+  padding-left: 20px;
+  color: var(--muted);
 }
 
 .band {
@@ -382,9 +486,40 @@ h3 {
   font-size: 18px;
 }
 
+.archive-groups,
 .archive-list {
   display: grid;
   gap: 22px;
+}
+
+.archive-groups {
+  gap: 34px;
+}
+
+.archive-category {
+  display: grid;
+  gap: 14px;
+}
+
+.archive-category-heading {
+  display: flex;
+  align-items: end;
+  justify-content: space-between;
+  gap: 16px;
+  padding-bottom: 10px;
+  border-bottom: 2px solid var(--ink);
+}
+
+.archive-category-heading h3 {
+  margin: 0;
+  font-size: 24px;
+}
+
+.archive-category-heading span {
+  color: var(--muted);
+  font-size: 12px;
+  font-weight: 850;
+  text-transform: uppercase;
 }
 
 .archive-event {
@@ -420,6 +555,27 @@ h3 {
 
 .archive-content > p {
   color: var(--muted);
+}
+
+.archive-content > .archive-location {
+  display: inline-flex;
+  gap: 7px;
+  align-items: center;
+  margin-bottom: 10px;
+  color: var(--ink);
+  font-size: 14px;
+  font-weight: 800;
+}
+
+.archive-content > .archive-location::before {
+  content: "";
+  width: 12px;
+  height: 12px;
+  flex: 0 0 12px;
+  border: 2px solid var(--red);
+  border-radius: 50% 50% 50% 0;
+  transform: rotate(-45deg);
+  background: white;
 }
 
 .archive-photos {
@@ -578,6 +734,10 @@ h3 {
   .work-diagram-center strong {
     font-size: 26px;
   }
+
+  .focus-modal-grid {
+    grid-template-columns: 1fr;
+  }
 }
 
 @media (max-width: 560px) {
@@ -617,6 +777,23 @@ h3 {
   .archive-photos a {
     width: calc(50% - 5px);
     min-width: 132px;
+  }
+
+  .focus-modal {
+    padding: 14px;
+  }
+
+  .focus-modal-panel {
+    padding: 28px 18px 20px;
+  }
+
+  .focus-modal-close {
+    top: 12px;
+    right: 12px;
+  }
+
+  .focus-modal-panel h2 {
+    padding-right: 36px;
   }
 
   .site-footer {

@@ -71,6 +71,12 @@ const dictionary = {
       title: "Activity Archive",
       copy:
         "A date-based record of education, care, cultural visits, and social contribution activities with photos.",
+      groups: {
+        parenting: "Parent Education",
+        multicultural: "Multicultural Education",
+        care: "Child and Family Care Community Activities",
+        social: "Migrant-background Children's Social Contribution Activities",
+      },
       parent: {
         category: "Education and capacity building",
         title: "Multicultural parenting class for Chinese-national migrant-background parents of young children",
@@ -137,9 +143,268 @@ const dictionary = {
   },
 };
 
+const focusDepartments = {
+  ko: {
+    labels: {
+      modal: "관련 분야",
+      research: "진행 중인 연구",
+      activities: "활동 및 연계",
+    },
+    women: {
+      title: "이주여성",
+      summary:
+        "이주여성의 체류 안정, 가족 관계, 노동, 안전, 차별 대응을 당사자의 경험에서 출발해 다룹니다.",
+      research: [
+        "결혼이주여성과 이주여성 노동자의 체류·가족·노동권 실태 기록",
+        "폭력, 차별, 고립 상황에서 필요한 상담·지원 경로 조사",
+        "이주여성의 언어 접근성과 공공서비스 이용 경험 분석",
+      ],
+      activities: [
+        "권리 정보 안내와 상담기관 연계",
+        "이주여성 당사자 인터뷰와 현장 기록",
+        "가족, 체류, 안전 문제 관련 교육 자료 제작",
+      ],
+    },
+    children: {
+      title: "이주배경 아동·가족",
+      summary:
+        "이주배경 아동·청소년과 가족의 교육, 돌봄, 복지 접근성, 정체성 형성을 통합적으로 살핍니다.",
+      research: [
+        "이주배경 아동의 교육·돌봄 접근성과 학교생활 경험 연구",
+        "다문화가족, 중도입국 아동, 영유아 부모의 지원 수요 조사",
+        "지역사회 돌봄 공동체 활동의 효과와 지속 가능성 분석",
+      ],
+      activities: [
+        "독서활동, 문화탐방, 아동돌봄 프로그램 운영",
+        "부모교육 및 다문화 양육 클래스",
+        "가족센터, 학교, 지역기관과 사례 연계",
+      ],
+    },
+    irregular: {
+      title: "불법 노동자",
+      summary:
+        "미등록·비정규 이주노동자의 노동권, 체류 불안, 임금, 안전 문제를 권리 관점에서 기록합니다.",
+      research: [
+        "필리핀 등 동남아 출신 이주노동자의 노동환경과 권리 침해 사례 조사",
+        "미등록 상태가 의료, 주거, 임금체불 대응에 미치는 영향 분석",
+        "노동 상담과 구제 절차 접근성 연구",
+      ],
+      activities: [
+        "노동권 안내 자료 정리",
+        "임금체불, 산업재해, 체류 문제 관련 전문기관 연계",
+        "당사자 증언과 현장 사례 아카이브 구축",
+      ],
+    },
+    refugees: {
+      title: "난민",
+      summary:
+        "난민 신청, 보호 절차, 정착, 가족 결합, 지역사회 연결을 중심으로 제도와 현장의 간극을 다룹니다.",
+      research: [
+        "난민 신청 과정과 심사 절차의 접근성 연구",
+        "정착 과정에서의 주거, 의료, 교육, 노동 문제 조사",
+        "가족 결합과 지역사회 관계망 형성 사례 기록",
+      ],
+      activities: [
+        "난민 절차와 권리 정보 안내",
+        "정착 지원기관과 상담 연계",
+        "난민 당사자 경험 기반 현장 기록",
+      ],
+    },
+    diaspora: {
+      title: "재외동포",
+      summary:
+        "재외동포가 한국 사회와 해외 공동체 사이에서 겪는 체류, 정체성, 권리, 인정 문제를 연결해 봅니다.",
+      research: [
+        "재외동포 체류자격과 생활 기반 형성 경험 연구",
+        "세대, 언어, 귀환 경험에 따른 정체성 변화 조사",
+        "해외 동포 공동체와 한국 내 권리 이슈 비교",
+      ],
+      activities: [
+        "재외동포 권리 정보 정리",
+        "국내외 공동체 사례 수집",
+        "이주 역사와 기억을 연결하는 자료화 작업",
+      ],
+    },
+    workers: {
+      title: "외국인 근로자",
+      summary:
+        "외국인 근로자와 돌봄노동자의 고용 안정, 안전, 존엄, 생활 적응 문제를 현장 중심으로 다룹니다.",
+      research: [
+        "외국인 근로자의 고용조건, 주거, 안전 실태 조사",
+        "돌봄노동 이주화와 가족·노동시장 변화 연구",
+        "사업장 이동, 계약, 사회보험 접근성 분석",
+      ],
+      activities: [
+        "노동·체류·생활 정보 안내",
+        "상담기관 및 노동권 지원체계 연계",
+        "근로자 대상 문화적응·권리 교육",
+      ],
+    },
+    patriots: {
+      title: "독립유공자 후손",
+      summary:
+        "독립유공자 후손의 역사적 기억, 현재의 체류, 권리, 인정 문제를 이주와 시민권의 관점에서 살핍니다.",
+      research: [
+        "독립유공자 후손의 체류와 인정 제도 경험 기록",
+        "역사적 공헌과 현재 권리 보장의 간극 분석",
+        "국적, 가족, 세대 간 기억 전승 사례 연구",
+      ],
+      activities: [
+        "관련 제도와 지원 정보 안내",
+        "후손 공동체 사례 수집",
+        "역사 기억과 현재 권리를 연결하는 콘텐츠 제작",
+      ],
+    },
+    students: {
+      title: "유학생",
+      summary:
+        "현재는 보류 중인 분야로, 향후 유학생의 체류, 노동, 학업, 생활 적응 이슈를 연구 범위에 포함할 수 있습니다.",
+      research: [
+        "유학생 체류와 학업 지속 조건에 대한 예비 조사",
+        "아르바이트, 주거, 의료, 차별 경험 관련 자료 검토",
+        "졸업 후 정착과 진로 전환 사례 수집 준비",
+      ],
+      activities: [
+        "향후 연구 범위 검토",
+        "유학생 지원기관과 네트워크 탐색",
+        "기초 권리 정보 자료화 준비",
+      ],
+    },
+  },
+  en: {
+    labels: {
+      modal: "Focus Area",
+      research: "Ongoing Research",
+      activities: "Activities and Referrals",
+    },
+    women: {
+      title: "Migrant women",
+      summary:
+        "This department addresses migrant women's status security, family relations, labor, safety, and discrimination response from lived experience.",
+      research: [
+        "Field records on status, family, and labor rights among migrant women",
+        "Support pathways for violence, discrimination, and isolation",
+        "Language access and public-service experiences",
+      ],
+      activities: [
+        "Rights information and referral support",
+        "Interviews and field documentation led by migrant women",
+        "Education materials on family, status, and safety issues",
+      ],
+    },
+    children: {
+      title: "Migrant-background children and families",
+      summary:
+        "This department works on education, care, welfare access, and identity formation for migrant-background children, youth, and families.",
+      research: [
+        "Education and care access for migrant-background children",
+        "Support needs of multicultural families, newcomer children, and parents of young children",
+        "Impact and sustainability of community care activities",
+      ],
+      activities: [
+        "Reading, cultural visit, and child-care programs",
+        "Parent education and multicultural parenting classes",
+        "Case referrals with family centers, schools, and local institutions",
+      ],
+    },
+    irregular: {
+      title: "Irregular labor migrants / undocumented workers",
+      summary:
+        "This department documents labor rights, status insecurity, wages, and safety issues affecting irregular and undocumented migrant workers.",
+      research: [
+        "Labor conditions and rights violations among Filipino and Southeast Asian migrant workers",
+        "How undocumented status affects health care, housing, and wage-theft responses",
+        "Access to labor counseling and remedies",
+      ],
+      activities: [
+        "Labor-rights guidance materials",
+        "Referral pathways for wage theft, workplace injury, and status issues",
+        "Archive of testimony and field cases",
+      ],
+    },
+    refugees: {
+      title: "Refugees",
+      summary:
+        "This department focuses on asylum procedures, protection, settlement, family unity, and community connection.",
+      research: [
+        "Accessibility of asylum application and review procedures",
+        "Housing, health care, education, and labor issues during settlement",
+        "Family unity and local support networks",
+      ],
+      activities: [
+        "Information on refugee procedures and rights",
+        "Referrals to settlement-support organizations",
+        "Lived-experience field records",
+      ],
+    },
+    diaspora: {
+      title: "Overseas Koreans",
+      summary:
+        "This department connects status, identity, rights, and recognition issues faced by overseas Koreans across Korean society and diaspora communities.",
+      research: [
+        "Status pathways and settlement experiences of overseas Koreans",
+        "Identity changes across generation, language, and return migration",
+        "Comparative rights issues across domestic and overseas communities",
+      ],
+      activities: [
+        "Rights information for overseas Koreans",
+        "Domestic and overseas community case collection",
+        "Materials connecting migration history and memory",
+      ],
+    },
+    workers: {
+      title: "Foreign workers / care working",
+      summary:
+        "This department addresses employment stability, safety, dignity, and daily-life adaptation for foreign and care workers.",
+      research: [
+        "Employment conditions, housing, and workplace safety",
+        "Migration of care work and changes in families and labor markets",
+        "Workplace transfer, contracts, and social-insurance access",
+      ],
+      activities: [
+        "Labor, status, and daily-life information",
+        "Referrals to labor-rights support systems",
+        "Cultural adaptation and rights education for workers",
+      ],
+    },
+    patriots: {
+      title: "Descendants of independence patriots",
+      summary:
+        "This department studies historical memory, status, rights, and recognition for descendants of independence patriots through migration and citizenship lenses.",
+      research: [
+        "Status and recognition experiences among descendants",
+        "Gaps between historical contribution and present-day rights",
+        "Nationality, family, and intergenerational memory",
+      ],
+      activities: [
+        "Information on relevant systems and support",
+        "Community case collection",
+        "Content connecting historical memory and present rights",
+      ],
+    },
+    students: {
+      title: "International students",
+      summary:
+        "This area is currently on hold and may later include status, labor, study, and daily-life adaptation issues for international students.",
+      research: [
+        "Preliminary review of status and study-continuity conditions",
+        "Materials on part-time work, housing, health care, and discrimination",
+        "Preparation for cases on post-graduation settlement and careers",
+      ],
+      activities: [
+        "Future research-scope review",
+        "Mapping of student-support networks",
+        "Preparation of basic rights information",
+      ],
+    },
+  },
+};
+
 const originals = new Map();
 const i18nNodes = document.querySelectorAll("[data-i18n]");
 const buttons = document.querySelectorAll("[data-lang]");
+let currentLanguage = localStorage.getItem("kmi-language") || "ko";
+let activeFocusDepartment = null;
 
 i18nNodes.forEach((node) => {
   originals.set(node, node.textContent);
@@ -150,6 +415,7 @@ function readPath(source, path) {
 }
 
 function setLanguage(language) {
+  currentLanguage = language;
   document.documentElement.lang = language;
   const source = language === "en" ? dictionary.en : null;
 
@@ -164,11 +430,75 @@ function setLanguage(language) {
   });
 
   localStorage.setItem("kmi-language", language);
+
+  if (activeFocusDepartment) {
+    renderFocusModal(activeFocusDepartment);
+  }
 }
 
 buttons.forEach((button) => {
   button.addEventListener("click", () => setLanguage(button.dataset.lang || "ko"));
 });
 
+function listItems(items) {
+  return items.map((item) => `<li>${item}</li>`).join("");
+}
+
+function renderFocusModal(departmentKey) {
+  const modal = document.querySelector("[data-focus-modal]");
+  const content = focusDepartments[currentLanguage]?.[departmentKey] || focusDepartments.ko[departmentKey];
+  const labels = focusDepartments[currentLanguage]?.labels || focusDepartments.ko.labels;
+  if (!modal || !content) return;
+
+  modal.querySelector("[data-focus-modal-label]").textContent = labels.modal;
+  modal.querySelector("[data-focus-modal-title]").textContent = content.title;
+  modal.querySelector("[data-focus-modal-summary]").textContent = content.summary;
+  modal.querySelector("[data-focus-research-heading]").textContent = labels.research;
+  modal.querySelector("[data-focus-activity-heading]").textContent = labels.activities;
+  modal.querySelector("[data-focus-modal-research]").innerHTML = listItems(content.research);
+  modal.querySelector("[data-focus-modal-activities]").innerHTML = listItems(content.activities);
+}
+
+function openFocusModal(departmentKey) {
+  const modal = document.querySelector("[data-focus-modal]");
+  const closeButton = modal?.querySelector("[data-focus-close]");
+  if (!modal) return;
+
+  activeFocusDepartment = departmentKey;
+  renderFocusModal(departmentKey);
+  modal.hidden = false;
+  document.body.classList.add("modal-open");
+  closeButton?.focus();
+}
+
+function closeFocusModal() {
+  const modal = document.querySelector("[data-focus-modal]");
+  if (!modal) return;
+
+  modal.hidden = true;
+  activeFocusDepartment = null;
+  document.body.classList.remove("modal-open");
+}
+
+document.querySelectorAll("[data-focus-department]").forEach((card) => {
+  card.addEventListener("click", () => openFocusModal(card.dataset.focusDepartment));
+  card.addEventListener("keydown", (event) => {
+    if (event.key === "Enter" || event.key === " ") {
+      event.preventDefault();
+      openFocusModal(card.dataset.focusDepartment);
+    }
+  });
+});
+
+document.querySelectorAll("[data-focus-close]").forEach((element) => {
+  element.addEventListener("click", closeFocusModal);
+});
+
+document.addEventListener("keydown", (event) => {
+  if (event.key === "Escape" && activeFocusDepartment) {
+    closeFocusModal();
+  }
+});
+
 document.getElementById("year").textContent = new Date().getFullYear();
-setLanguage(localStorage.getItem("kmi-language") || "ko");
+setLanguage(currentLanguage);
