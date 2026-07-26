@@ -12,17 +12,17 @@ const dictionary = {
     hero: {
       title: "Korea Migration Institute",
       copy:
-        "A public-interest platform researching and advocating for migrant rights, family safety, labor dignity, and community connection in Korea.",
+        "A public-interest platform led by migrants and people with first-hand migration experience, researching migration realities and rights in Korea.",
       primary: "View Focus Areas",
       secondary: "Contact Us",
     },
     about: {
       eyebrow: "About KMI",
-      title: "A migration institute connecting field realities and policy",
+      title: "A research institute grounded in lived migration experience",
       body:
-        "Korea Migration Institute treats migration not as a single policy issue, but as social infrastructure where family, labor, status, education, care, memory, and citizenship meet.",
+        "Korea Migration Institute is led mainly by migrants and people who have directly experienced migration, working on immigration, multicultural society, status, labor, family, education, and care in Korea.",
       body2:
-        "The site is structured like a public-interest legal and migrant-support organization: research briefs, field records, rights guides, and solidarity campaigns in one place.",
+        "While many migration-related institutes in Korea are led primarily by Korean-run organizations, KMI begins from migrant voices, languages, and lived experience as the basis for research, education, counseling, and rights guidance.",
     },
     focus: {
       eyebrow: "Focus Areas",
@@ -39,6 +39,7 @@ const dictionary = {
     work: {
       eyebrow: "What We Do",
       title: "Research, education, rights information, and referrals",
+      center: "Operating model",
       research: {
         title: "Migration society research",
         body:
