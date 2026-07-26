@@ -3,10 +3,10 @@
   <rect x="7" y="7" width="50" height="50" fill="#ffffff" stroke="#101828" stroke-width="4"/>
   <text
     x="32"
-    y="41"
+    y="43"
     text-anchor="middle"
     font-family="Inter, Arial, Helvetica, sans-serif"
-    font-size="22"
+    font-size="27"
     font-weight="850"
     letter-spacing="0"
     fill="#101828"

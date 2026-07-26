@@ -128,30 +128,25 @@
             <strong>KMI</strong>
             <span data-i18n="work.center">활동 체계</span>
           </div>
-          <article class="work-node node-research">
+          <article class="work-node node-research" role="button" tabindex="0" data-work-area="research" aria-haspopup="dialog">
             <span>01</span>
             <h3 data-i18n="work.research.title">이민사회 연구</h3>
-            <p data-i18n="work.research.body">한국 사회의 이민, 다문화, 이주민의 삶과 권리에 관한 연구를 수행하고, 현장 사례와 통계 자료를 바탕으로 연구보고서와 자료를 발행합니다.</p>
           </article>
-          <article class="work-node node-education">
+          <article class="work-node node-education" role="button" tabindex="0" data-work-area="education" aria-haspopup="dialog">
             <span>02</span>
             <h3 data-i18n="work.education.title">교육 및 역량강화</h3>
-            <p data-i18n="work.education.body">이주민, 이주배경아동·청소년, 가족, 교사, 상담가, 활동가를 대상으로 이민사회 이해, 문화적응, 권리, 상담 및 다문화교육 프로그램을 운영합니다.</p>
           </article>
-          <article class="work-node node-rights">
+          <article class="work-node node-rights" role="button" tabindex="0" data-work-area="rights" aria-haspopup="dialog">
             <span>03</span>
             <h3 data-i18n="work.rights.title">권리 정보 안내</h3>
-            <p data-i18n="work.rights.body">체류, 노동, 가족, 교육, 의료, 난민 절차 등 이주민에게 필요한 제도와 권리 정보를 이해하기 쉽게 제공합니다.</p>
           </article>
-          <article class="work-node node-counseling">
+          <article class="work-node node-counseling" role="button" tabindex="0" data-work-area="counseling" aria-haspopup="dialog">
             <span>04</span>
             <h3 data-i18n="work.counseling.title">상담 및 사례 연계</h3>
-            <p data-i18n="work.counseling.body">이주민과 이주배경가족이 겪는 체류, 가족, 교육, 노동, 생활 적응 등의 어려움을 상담하고, 필요한 경우 전문기관과 지원체계로 연계합니다.</p>
           </article>
-          <article class="work-node node-collaboration">
+          <article class="work-node node-collaboration" role="button" tabindex="0" data-work-area="collaboration" aria-haspopup="dialog">
             <span>05</span>
             <h3 data-i18n="work.collaboration.title">연구·현장 협력</h3>
-            <p data-i18n="work.collaboration.body">연구자, 법률가, 상담가, 교사, 활동가, 지역기관과 협력하여 연구, 교육, 상담과 현장 실천이 연결되는 기반을 마련합니다.</p>
           </article>
         </div>
       </section>
@@ -400,6 +395,15 @@
             <ul data-focus-modal-activities></ul>
           </div>
         </div>
+      </section>
+    </div>
+    <div class="work-modal" data-work-modal hidden>
+      <div class="focus-modal-backdrop" data-work-close></div>
+      <section class="focus-modal-panel work-modal-panel" role="dialog" aria-modal="true" aria-labelledby="work-modal-title">
+        <button class="focus-modal-close" type="button" data-work-close aria-label="Close">×</button>
+        <p class="eyebrow" data-work-modal-label>What We Do</p>
+        <h2 id="work-modal-title" data-work-modal-title></h2>
+        <p class="focus-modal-summary" data-work-modal-body></p>
       </section>
     </div>
   </body>

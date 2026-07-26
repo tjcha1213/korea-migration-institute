@@ -400,11 +400,38 @@ const focusDepartments = {
   },
 };
 
+const focusDepartmentNumbers = {
+  women: "01",
+  children: "02",
+  irregular: "03",
+  refugees: "04",
+  diaspora: "05",
+  workers: "06",
+  patriots: "07",
+  students: "08",
+};
+
+const workAreaDetails = {
+  ko: {
+    research:
+      "한국 사회의 이민, 다문화, 이주민의 삶과 권리에 관한 연구를 수행하고, 현장 사례와 통계 자료를 바탕으로 연구보고서와 자료를 발행합니다.",
+    education:
+      "이주민, 이주배경아동·청소년, 가족, 교사, 상담가, 활동가를 대상으로 이민사회 이해, 문화적응, 권리, 상담 및 다문화교육 프로그램을 운영합니다.",
+    rights:
+      "체류, 노동, 가족, 교육, 의료, 난민 절차 등 이주민에게 필요한 제도와 권리 정보를 이해하기 쉽게 제공합니다.",
+    counseling:
+      "이주민과 이주배경가족이 겪는 체류, 가족, 교육, 노동, 생활 적응 등의 어려움을 상담하고, 필요한 경우 전문기관과 지원체계로 연계합니다.",
+    collaboration:
+      "연구자, 법률가, 상담가, 교사, 활동가, 지역기관과 협력하여 연구, 교육, 상담과 현장 실천이 연결되는 기반을 마련합니다.",
+  },
+};
+
 const originals = new Map();
 const i18nNodes = document.querySelectorAll("[data-i18n]");
 const buttons = document.querySelectorAll("[data-lang]");
 let currentLanguage = localStorage.getItem("kmi-language") || "ko";
 let activeFocusDepartment = null;
+let activeWorkArea = null;
 
 i18nNodes.forEach((node) => {
   originals.set(node, node.textContent);
@@ -434,6 +461,9 @@ function setLanguage(language) {
   if (activeFocusDepartment) {
     renderFocusModal(activeFocusDepartment);
   }
+  if (activeWorkArea) {
+    renderWorkModal(activeWorkArea);
+  }
 }
 
 buttons.forEach((button) => {
@@ -450,13 +480,55 @@ function renderFocusModal(departmentKey) {
   const labels = focusDepartments[currentLanguage]?.labels || focusDepartments.ko.labels;
   if (!modal || !content) return;
 
-  modal.querySelector("[data-focus-modal-label]").textContent = labels.modal;
+  const departmentNumber = focusDepartmentNumbers[departmentKey];
+  modal.querySelector("[data-focus-modal-label]").textContent = departmentNumber
+    ? `${labels.modal} ${departmentNumber}`
+    : labels.modal;
   modal.querySelector("[data-focus-modal-title]").textContent = content.title;
   modal.querySelector("[data-focus-modal-summary]").textContent = content.summary;
   modal.querySelector("[data-focus-research-heading]").textContent = labels.research;
   modal.querySelector("[data-focus-activity-heading]").textContent = labels.activities;
   modal.querySelector("[data-focus-modal-research]").innerHTML = listItems(content.research);
   modal.querySelector("[data-focus-modal-activities]").innerHTML = listItems(content.activities);
+}
+
+function getWorkAreaContent(areaKey) {
+  const source = currentLanguage === "en" ? dictionary.en : null;
+  const title = readPath(source, `work.${areaKey}.title`) || originals.get(document.querySelector(`[data-i18n="work.${areaKey}.title"]`));
+  const body = readPath(source, `work.${areaKey}.body`) || workAreaDetails.ko[areaKey];
+  const label = readPath(source, "work.eyebrow") || originals.get(document.querySelector('[data-i18n="work.eyebrow"]'));
+  return { title, body, label };
+}
+
+function renderWorkModal(areaKey) {
+  const modal = document.querySelector("[data-work-modal]");
+  const content = getWorkAreaContent(areaKey);
+  if (!modal || !content.title || !content.body) return;
+
+  modal.querySelector("[data-work-modal-label]").textContent = content.label;
+  modal.querySelector("[data-work-modal-title]").textContent = content.title;
+  modal.querySelector("[data-work-modal-body]").textContent = content.body;
+}
+
+function openWorkModal(areaKey) {
+  const modal = document.querySelector("[data-work-modal]");
+  const closeButton = modal?.querySelector("[data-work-close]");
+  if (!modal) return;
+
+  activeWorkArea = areaKey;
+  renderWorkModal(areaKey);
+  modal.hidden = false;
+  document.body.classList.add("modal-open");
+  closeButton?.focus();
+}
+
+function closeWorkModal() {
+  const modal = document.querySelector("[data-work-modal]");
+  if (!modal) return;
+
+  modal.hidden = true;
+  activeWorkArea = null;
+  document.body.classList.remove("modal-open");
 }
 
 function openFocusModal(departmentKey) {
@@ -494,9 +566,26 @@ document.querySelectorAll("[data-focus-close]").forEach((element) => {
   element.addEventListener("click", closeFocusModal);
 });
 
+document.querySelectorAll("[data-work-area]").forEach((card) => {
+  card.addEventListener("click", () => openWorkModal(card.dataset.workArea));
+  card.addEventListener("keydown", (event) => {
+    if (event.key === "Enter" || event.key === " ") {
+      event.preventDefault();
+      openWorkModal(card.dataset.workArea);
+    }
+  });
+});
+
+document.querySelectorAll("[data-work-close]").forEach((element) => {
+  element.addEventListener("click", closeWorkModal);
+});
+
 document.addEventListener("keydown", (event) => {
   if (event.key === "Escape" && activeFocusDepartment) {
     closeFocusModal();
+  }
+  if (event.key === "Escape" && activeWorkArea) {
+    closeWorkModal();
   }
 });
 
