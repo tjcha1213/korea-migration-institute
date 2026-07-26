@@ -436,6 +436,10 @@ const buttons = document.querySelectorAll("[data-lang]");
 let currentLanguage = localStorage.getItem("kmi-language") || "ko";
 let activeFocusDepartment = null;
 let activeWorkArea = null;
+let photoModalOpen = false;
+let activePhotoGroup = [];
+let activePhotoIndex = 0;
+let photoTouchStartX = null;
 
 i18nNodes.forEach((node) => {
   originals.set(node, node.textContent);
@@ -535,6 +539,91 @@ function closeWorkModal() {
   document.body.classList.remove("modal-open");
 }
 
+function getPhotoData(link) {
+  const thumbnail = link.querySelector("img");
+  return {
+    src: link.href,
+    alt: thumbnail?.alt || "",
+  };
+}
+
+function renderPhotoModal() {
+  const modal = document.querySelector("[data-photo-modal]");
+  const image = modal?.querySelector("[data-photo-modal-image]");
+  const caption = modal?.querySelector("[data-photo-modal-caption]");
+  const dots = modal?.querySelector("[data-photo-modal-dots]");
+  if (!modal || !(image instanceof HTMLImageElement)) return;
+
+  const photo = activePhotoGroup[activePhotoIndex];
+  if (!photo) return;
+
+  image.src = photo.src;
+  image.alt = photo.alt;
+  if (caption) {
+    caption.textContent = photo.alt;
+  }
+  if (dots) {
+    dots.innerHTML = "";
+    dots.hidden = activePhotoGroup.length <= 1;
+    activePhotoGroup.forEach((_, index) => {
+      const dot = document.createElement("button");
+      dot.type = "button";
+      dot.className = "photo-modal-dot";
+      dot.setAttribute("aria-label", `Show photo ${index + 1}`);
+      dot.classList.toggle("active", index === activePhotoIndex);
+      dot.addEventListener("click", () => {
+        activePhotoIndex = index;
+        renderPhotoModal();
+      });
+      dots.append(dot);
+    });
+  }
+}
+
+function stepPhotoModal(direction) {
+  if (activePhotoGroup.length <= 1) return;
+  activePhotoIndex = (activePhotoIndex + direction + activePhotoGroup.length) % activePhotoGroup.length;
+  renderPhotoModal();
+}
+
+function openPhotoModal(link) {
+  const modal = document.querySelector("[data-photo-modal]");
+  const closeButton = modal?.querySelector("[data-photo-close]");
+  if (!modal) return;
+
+  const category = link.closest(".archive-category");
+  const links = Array.from(category?.querySelectorAll("[data-photo-modal-trigger]") || [link]);
+  activePhotoGroup = links.map(getPhotoData);
+  activePhotoIndex = Math.max(0, links.indexOf(link));
+  renderPhotoModal();
+  modal.hidden = false;
+  photoModalOpen = true;
+  document.body.classList.add("modal-open");
+  closeButton?.focus();
+}
+
+function closePhotoModal() {
+  const modal = document.querySelector("[data-photo-modal]");
+  const image = modal?.querySelector("[data-photo-modal-image]");
+  const dots = modal?.querySelector("[data-photo-modal-dots]");
+  if (!modal) return;
+
+  modal.hidden = true;
+  photoModalOpen = false;
+  activePhotoGroup = [];
+  activePhotoIndex = 0;
+  photoTouchStartX = null;
+  if (image instanceof HTMLImageElement) {
+    image.removeAttribute("src");
+    image.alt = "";
+  }
+  if (dots) {
+    dots.innerHTML = "";
+    dots.hidden = true;
+  }
+  document.body.classList.remove("modal-open");
+}
+
 function openFocusModal(departmentKey) {
   const modal = document.querySelector("[data-focus-modal]");
   const closeButton = modal?.querySelector("[data-focus-close]");
@@ -584,12 +673,45 @@ document.querySelectorAll("[data-work-close]").forEach((element) => {
   element.addEventListener("click", closeWorkModal);
 });
 
+document.querySelectorAll("[data-photo-modal-trigger]").forEach((link) => {
+  link.addEventListener("click", (event) => {
+    event.preventDefault();
+    openPhotoModal(link);
+  });
+});
+
+document.querySelectorAll("[data-photo-close]").forEach((element) => {
+  element.addEventListener("click", closePhotoModal);
+});
+
+document.querySelector("[data-photo-modal] .photo-modal-panel")?.addEventListener("touchstart", (event) => {
+  photoTouchStartX = event.touches[0]?.clientX ?? null;
+});
+
+document.querySelector("[data-photo-modal] .photo-modal-panel")?.addEventListener("touchend", (event) => {
+  if (photoTouchStartX === null) return;
+  const touchEndX = event.changedTouches[0]?.clientX ?? photoTouchStartX;
+  const distance = touchEndX - photoTouchStartX;
+  photoTouchStartX = null;
+  if (Math.abs(distance) < 48) return;
+  stepPhotoModal(distance < 0 ? 1 : -1);
+});
+
 document.addEventListener("keydown", (event) => {
   if (event.key === "Escape" && activeFocusDepartment) {
     closeFocusModal();
   }
   if (event.key === "Escape" && activeWorkArea) {
     closeWorkModal();
+  }
+  if (event.key === "Escape" && photoModalOpen) {
+    closePhotoModal();
+  }
+  if (event.key === "ArrowRight" && photoModalOpen) {
+    stepPhotoModal(1);
+  }
+  if (event.key === "ArrowLeft" && photoModalOpen) {
+    stepPhotoModal(-1);
   }
 });
 

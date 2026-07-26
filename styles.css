@@ -313,12 +313,14 @@ h3 {
 }
 
 .focus-modal[hidden],
-.work-modal[hidden] {
+.work-modal[hidden],
+.photo-modal[hidden] {
   display: none;
 }
 
 .focus-modal,
-.work-modal {
+.work-modal,
+.photo-modal {
   position: fixed;
   inset: 0;
   z-index: 50;
@@ -644,6 +646,66 @@ h3 {
   transform: scale(1.04);
 }
 
+.photo-modal-panel {
+  position: relative;
+  width: min(1040px, calc(100vw - 32px));
+  max-height: calc(100vh - 32px);
+  margin: 0;
+  padding: 14px;
+  overflow: auto;
+  background: white;
+  border: 1px solid var(--line);
+  box-shadow: 0 30px 80px rgba(16, 24, 40, 0.28);
+}
+
+.photo-modal-panel img {
+  display: block;
+  width: 100%;
+  max-height: calc(100vh - 120px);
+  object-fit: contain;
+  background: var(--soft);
+}
+
+.photo-modal-dots {
+  position: sticky;
+  bottom: 12px;
+  display: flex;
+  justify-content: center;
+  gap: 8px;
+  margin-top: -30px;
+  pointer-events: none;
+}
+
+.photo-modal-dot {
+  width: 9px;
+  height: 9px;
+  padding: 0;
+  border: 1px solid rgba(255, 255, 255, 0.95);
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.44);
+  box-shadow: 0 1px 5px rgba(16, 24, 40, 0.38);
+  cursor: pointer;
+  pointer-events: auto;
+  transition: width 160ms ease, background 160ms ease;
+}
+
+.photo-modal-dot.active {
+  width: 24px;
+  background: #ffffff;
+}
+
+.photo-modal-panel figcaption {
+  margin-top: 22px;
+  color: var(--muted);
+  font-size: 14px;
+  font-weight: 700;
+}
+
+.photo-modal-close {
+  top: 22px;
+  right: 22px;
+}
+
 .resource-list {
   border-top: 2px solid var(--ink);
 }
@@ -950,7 +1012,8 @@ h3 {
     min-width: 132px;
   }
 
-  .focus-modal {
+  .focus-modal,
+  .photo-modal {
     padding: 14px;
   }
 
@@ -965,6 +1028,32 @@ h3 {
 
   .focus-modal-panel h2 {
     padding-right: 36px;
+  }
+
+  .photo-modal-panel {
+    width: calc(100vw - 20px);
+    max-height: calc(100dvh - 20px);
+    padding: 8px;
+  }
+
+  .photo-modal-panel img {
+    max-height: calc(100dvh - 88px);
+  }
+
+  .photo-modal-dots {
+    bottom: 10px;
+    margin-top: -28px;
+  }
+
+  .photo-modal-panel figcaption {
+    margin-top: 20px;
+    padding-right: 42px;
+    font-size: 12px;
+  }
+
+  .photo-modal-close {
+    top: 14px;
+    right: 14px;
   }
 
   .site-footer {
