@@ -5,11 +5,11 @@ const dictionary = {
       about: "About",
       focus: "Focus",
       work: "Work",
+      archive: "Archive",
       resources: "Resources",
       contact: "Contact",
     },
     hero: {
-      eyebrow: "Migration Rights Institute",
       title: "Korea Migration Institute",
       copy:
         "A public-interest platform researching and advocating for migrant rights, family safety, labor dignity, and community connection in Korea.",
@@ -63,6 +63,61 @@ const dictionary = {
         title: "Research-field collaboration",
         body:
           "We collaborate with researchers, lawyers, counselors, teachers, advocates, and local institutions to connect research, education, counseling, and field practice.",
+      },
+    },
+    archive: {
+      eyebrow: "Archive",
+      title: "Activity Archive",
+      copy:
+        "A date-based record of education, care, cultural visits, and social contribution activities with photos.",
+      parent: {
+        category: "Education and capacity building",
+        title: "Multicultural parenting class for Chinese-national migrant-background parents of young children",
+        location: "Seoul Support Center for Childcare",
+        body:
+          "A parent education program supporting migrant-background parents of young children in understanding Korea's childcare environment and practical information for multicultural family life.",
+      },
+      culture: {
+        category: "Multicultural education",
+        title: "Cultural understanding education for counselors and interpreters supporting migrant-background youth",
+        location: "Grace Hotel Seoul",
+        body:
+          "Training for counselors and interpreters who support migrant-background youth, focused on cultural understanding and stronger field communication.",
+      },
+      award: {
+        category: "Community activity",
+        title: "Community Encouragement Award",
+        location: "Gwanak-gu Office, Seoul",
+        body:
+          "The child and family care community activity received a local community encouragement award recognizing its significance and continuity.",
+      },
+      social: {
+        category: "Social contribution",
+        title: "Social contribution activity for migrant-background children and youth in Jeonbuk",
+        location: "Jeonju Family Center",
+        body:
+          "A social contribution activity helping migrant-background children and youth in Jeonbuk experience participation and sharing within the local community.",
+      },
+      museum: {
+        category: "Cultural visit",
+        title: "Korean Immigration History Museum cultural visit",
+        location: "Korean Immigration History Museum, Incheon",
+        body:
+          "A cultural visit with the child and family care community to learn about historical connections between migration and Korean society.",
+      },
+      reading: {
+        category: "Child and family care",
+        title: "Reading activity for migrant-background children",
+        location: "Seoul National University College of Education",
+        body:
+          "A care program centered on reading activities to support language expression and learning interest among migrant-background children.",
+      },
+      childcare: {
+        category: "Child and family care",
+        title: "Care activity for migrant-background children",
+        location: "SNU President's Lawn and College of Human Ecology",
+        body:
+          "A care activity supporting learning, play, and relationship-building for migrant-background children and families.",
       },
     },
     resources: {
