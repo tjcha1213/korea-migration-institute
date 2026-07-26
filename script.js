@@ -12,7 +12,7 @@ const dictionary = {
     hero: {
       title: "Korea Migration Institute",
       copy:
-        "A public-interest platform led by migrants and people with first-hand migration experience, researching migration realities and rights in Korea.",
+        "A research institute grounded in lived migration experience, led by migrants and people with first-hand migration experience to study migration realities and rights in Korea.",
       primary: "View Focus Areas",
       secondary: "Contact Us",
     },
