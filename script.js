@@ -433,6 +433,7 @@ const workAreaDetails = {
 const originals = new Map();
 const i18nNodes = document.querySelectorAll("[data-i18n]");
 const buttons = document.querySelectorAll("[data-lang]");
+const navLinks = document.querySelectorAll(".main-nav a[href^='#']");
 let currentLanguage = localStorage.getItem("kmi-language") || "ko";
 let activeFocusDepartment = null;
 let activeWorkArea = null;
@@ -477,6 +478,36 @@ function setLanguage(language) {
 buttons.forEach((button) => {
   button.addEventListener("click", () => setLanguage(button.dataset.lang || "ko"));
 });
+
+function setActiveNav(hash) {
+  navLinks.forEach((link) => {
+    const isActive = link.getAttribute("href") === hash;
+    link.classList.toggle("active", isActive);
+    if (isActive) link.setAttribute("aria-current", "page");
+    else link.removeAttribute("aria-current");
+  });
+}
+
+navLinks.forEach((link) => {
+  link.addEventListener("click", () => setActiveNav(link.getAttribute("href")));
+});
+
+const observedSections = Array.from(navLinks)
+  .map((link) => document.querySelector(link.getAttribute("href")))
+  .filter(Boolean);
+
+if ("IntersectionObserver" in window && observedSections.length) {
+  const observer = new IntersectionObserver(
+    (entries) => {
+      const visible = entries
+        .filter((entry) => entry.isIntersecting)
+        .sort((a, b) => b.intersectionRatio - a.intersectionRatio)[0];
+      if (visible?.target?.id) setActiveNav(`#${visible.target.id}`);
+    },
+    { rootMargin: "-30% 0px -55% 0px", threshold: [0.12, 0.3, 0.6] }
+  );
+  observedSections.forEach((section) => observer.observe(section));
+}
 
 function listItems(items) {
   return items.map((item) => `<li>${item}</li>`).join("");

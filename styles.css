@@ -106,18 +106,22 @@ a {
 .main-nav {
   display: flex;
   justify-content: center;
-  gap: 24px;
+  gap: clamp(12px, 2.3vw, 28px);
   color: var(--muted);
   font-size: 14px;
   font-weight: 700;
 }
 
 .main-nav a {
-  padding: 8px 0;
+  padding: 8px 10px;
+  border-radius: 999px;
+  transition: background 0.18s ease, color 0.18s ease;
 }
 
-.main-nav a:hover {
+.main-nav a:hover,
+.main-nav a.active {
   color: var(--ink);
+  background: #eef0f3;
 }
 
 .language-toggle {
@@ -776,14 +780,14 @@ h3 {
 
   .main-nav {
     grid-column: 1 / -1;
-    justify-content: space-between;
-    gap: 10px;
+    justify-content: center;
+    gap: 8px;
     overflow-x: visible;
     font-size: 13px;
   }
 
   .main-nav a {
-    padding: 6px 0;
+    padding: 6px 10px;
     white-space: nowrap;
   }
 
@@ -911,15 +915,16 @@ h3 {
 
   .main-nav {
     display: grid;
-    grid-template-columns: repeat(6, max-content);
-    justify-content: space-between;
-    gap: 4px;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    justify-content: stretch;
+    gap: 6px;
     width: 100%;
     font-size: 11px;
   }
 
   .main-nav a {
-    padding: 4px 0;
+    padding: 6px 4px;
+    text-align: center;
   }
 
   .brand-mark {
