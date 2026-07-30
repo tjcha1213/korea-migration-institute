@@ -770,8 +770,8 @@ h3 {
 
 @media (max-width: 900px) {
   .site-header {
-    grid-template-columns: 1fr auto;
-    padding-right: 92px;
+    grid-template-columns: 1fr;
+    padding-right: max(24px, calc((100vw - var(--max)) / 2));
   }
 
   .main-nav {
@@ -788,15 +788,14 @@ h3 {
   }
 
   .language-toggle {
-    position: fixed;
-    top: 50%;
-    right: 12px;
+    position: absolute;
+    top: calc(100% + 8px);
+    right: max(24px, calc((100vw - var(--max)) / 2));
     z-index: 40;
-    flex-direction: column;
-    gap: 2px;
-    padding: 3px;
+    flex-direction: row;
+    gap: 4px;
+    padding: 4px;
     box-shadow: 0 12px 30px rgba(16, 24, 40, 0.16);
-    transform: translateY(-50%);
   }
 
   .language-button {
@@ -891,7 +890,11 @@ h3 {
   .site-header {
     grid-template-columns: 1fr;
     gap: 12px;
-    padding: 14px 68px 14px 16px;
+    padding: 14px 16px;
+  }
+
+  .language-toggle {
+    right: 16px;
   }
 
   .brand {
