@@ -762,6 +762,22 @@ h3 {
   font-size: 17px;
 }
 
+.contact-panel .contact-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: fit-content;
+  min-height: 42px;
+  margin-top: 2px;
+  margin-bottom: 0;
+  padding: 0 16px;
+  border: 1px solid var(--ink);
+  background: var(--ink);
+  color: #fff;
+  font-size: 14px;
+  font-weight: 850;
+}
+
 .site-footer {
   display: flex;
   justify-content: space-between;
@@ -801,9 +817,29 @@ h3 {
 }
 
 .contributor-card {
+  position: relative;
   padding: 24px;
   border: 1px solid var(--line);
   background: var(--soft);
+  cursor: pointer;
+  transition: transform 0.18s ease, box-shadow 0.18s ease, border-color 0.18s ease;
+}
+
+.contributor-card:hover,
+.contributor-card:focus-visible {
+  transform: translateY(-2px);
+  border-color: color-mix(in srgb, var(--blue) 34%, var(--line));
+  box-shadow: var(--shadow);
+  outline: none;
+}
+
+.contributor-card::after {
+  content: "↗";
+  position: absolute;
+  top: 20px;
+  right: 22px;
+  color: var(--muted);
+  font-size: 16px;
 }
 
 .contributor-card span {
@@ -825,6 +861,33 @@ h3 {
 
 .contributor-card p:last-child {
   margin-bottom: 0;
+  color: var(--muted);
+}
+
+.contributor-modal-panel {
+  max-width: 680px;
+}
+
+.contributor-modal-role {
+  margin: -4px 0 18px;
+  color: var(--blue);
+  font-weight: 850;
+}
+
+.contributor-modal-detail {
+  margin-top: 24px;
+  padding: 22px;
+  border: 1px solid var(--line);
+  background: var(--soft);
+}
+
+.contributor-modal-detail h3 {
+  margin: 0 0 8px;
+  font-size: 16px;
+}
+
+.contributor-modal-detail p {
+  margin: 0;
   color: var(--muted);
 }
 

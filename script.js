@@ -146,6 +146,48 @@ const dictionary = {
       note: "Research · Advocacy · Community",
       contributors: "Contributors",
     },
+    contributors: {
+      eyebrow: "Contributors",
+      title: "Contributors",
+      body: "Meet the people contributing to Korea Migration Institute's research, education, counseling referrals, field practice, and documentation.",
+      modalLabel: "Contributor",
+      modalHeading: "Contribution",
+      one: {
+        name: "Contributor Name",
+        role: "Research · Field Collaboration",
+        summary: "A contributor supporting KMI's research and field case documentation.",
+        detail:
+          "This contributor helps organize field-based knowledge, migration-related cases, and research questions so that lived experience can inform KMI's research agenda.",
+      },
+      two: {
+        name: "Contributor Name",
+        role: "Education · Community Program",
+        summary: "A contributor supporting migrant-background children, families, and community programs.",
+        detail:
+          "This contributor supports educational activities, parent-facing programs, and community-based learning environments connected to migrant-background children and families.",
+      },
+      three: {
+        name: "Contributor Name",
+        role: "Rights Guidance · Counseling Linkage",
+        summary: "A contributor working with information guidance and counseling referrals.",
+        detail:
+          "This contributor helps connect questions around status, labor, family, education, and daily life to accessible guidance and referral pathways.",
+      },
+      four: {
+        name: "Contributor Name",
+        role: "Archive · Translation · Documentation",
+        summary: "A contributor supporting activity records, photo archives, translation, and materials.",
+        detail:
+          "This contributor helps preserve institutional memory through documentation, translation, archive management, and preparation of public-facing materials.",
+      },
+      five: {
+        name: "Contributor Name",
+        role: "Community Partnership · Field Support",
+        summary: "A contributor supporting partnerships with local institutions and field activities.",
+        detail:
+          "This contributor supports outreach, local collaboration, and coordination with family centers, schools, community groups, and field partners.",
+      },
+    },
   },
 };
 
@@ -435,10 +477,11 @@ const workAreaDetails = {
 const originals = new Map();
 const i18nNodes = document.querySelectorAll("[data-i18n]");
 const buttons = document.querySelectorAll("[data-lang]");
-const navLinks = document.querySelectorAll(".main-nav a[href^='#']");
+const navLinks = document.querySelectorAll(".main-nav a[href*='#']");
 let currentLanguage = localStorage.getItem("kmi-language") || "ko";
 let activeFocusDepartment = null;
 let activeWorkArea = null;
+let activeContributor = null;
 let photoModalOpen = false;
 let activePhotoGroup = [];
 let activePhotoIndex = 0;
@@ -468,6 +511,7 @@ function setLanguage(language) {
   });
 
   localStorage.setItem("kmi-language", language);
+  requestActiveNavUpdate();
 
   if (activeFocusDepartment) {
     renderFocusModal(activeFocusDepartment);
@@ -475,15 +519,37 @@ function setLanguage(language) {
   if (activeWorkArea) {
     renderWorkModal(activeWorkArea);
   }
+  if (activeContributor) {
+    renderContributorModal(activeContributor);
+  }
 }
 
 buttons.forEach((button) => {
   button.addEventListener("click", () => setLanguage(button.dataset.lang || "ko"));
 });
 
+function getNavHash(link) {
+  try {
+    return new URL(link.getAttribute("href"), window.location.href).hash;
+  } catch {
+    return link.getAttribute("href") || "";
+  }
+}
+
+function getNavSection(link) {
+  const hash = getNavHash(link);
+  if (!hash || hash === "#") return null;
+
+  try {
+    return document.querySelector(hash);
+  } catch {
+    return null;
+  }
+}
+
 function setActiveNav(hash) {
   navLinks.forEach((link) => {
-    const isActive = link.getAttribute("href") === hash;
+    const isActive = getNavHash(link) === hash;
     link.classList.toggle("active", isActive);
     if (isActive) link.setAttribute("aria-current", "page");
     else link.removeAttribute("aria-current");
@@ -491,28 +557,104 @@ function setActiveNav(hash) {
 }
 
 navLinks.forEach((link) => {
-  link.addEventListener("click", () => setActiveNav(link.getAttribute("href")));
+  link.addEventListener("click", () => setActiveNav(getNavHash(link)));
 });
 
-const observedSections = Array.from(navLinks)
-  .map((link) => document.querySelector(link.getAttribute("href")))
-  .filter(Boolean);
+const observedSectionMap = new Map();
+navLinks.forEach((link) => {
+  const hash = getNavHash(link);
+  const section = getNavSection(link);
+  if (section && !observedSectionMap.has(hash)) {
+    observedSectionMap.set(hash, section);
+  }
+});
+const observedSections = Array.from(observedSectionMap, ([hash, section]) => ({ hash, section }));
 
-if ("IntersectionObserver" in window && observedSections.length) {
-  const observer = new IntersectionObserver(
-    (entries) => {
-      const visible = entries
-        .filter((entry) => entry.isIntersecting)
-        .sort((a, b) => b.intersectionRatio - a.intersectionRatio)[0];
-      if (visible?.target?.id) setActiveNav(`#${visible.target.id}`);
-    },
-    { rootMargin: "-30% 0px -55% 0px", threshold: [0.12, 0.3, 0.6] }
-  );
-  observedSections.forEach((section) => observer.observe(section));
+function updateActiveNavFromScroll() {
+  if (!observedSections.length) return;
+  const headerHeight = document.querySelector(".site-header")?.offsetHeight || 0;
+  const activationOffset = headerHeight + Math.min(140, window.innerHeight * 0.22);
+  const scrollTop = window.scrollY || document.documentElement.scrollTop || 0;
+  const pageBottom = scrollTop + window.innerHeight >= document.documentElement.scrollHeight - 2;
+  let activeItem = observedSections[0];
+
+  observedSections.forEach((item) => {
+    const sectionTop = item.section.getBoundingClientRect().top + scrollTop;
+    if (scrollTop + activationOffset >= sectionTop) {
+      activeItem = item;
+    }
+  });
+
+  if (pageBottom) {
+    activeItem = observedSections[observedSections.length - 1];
+  }
+
+  if (activeItem?.hash) setActiveNav(activeItem.hash);
+}
+
+let navScrollFrame = null;
+function requestActiveNavUpdate() {
+  if (navScrollFrame !== null) return;
+  navScrollFrame = window.requestAnimationFrame(() => {
+    navScrollFrame = null;
+    updateActiveNavFromScroll();
+  });
+}
+
+if (observedSections.length) {
+  window.addEventListener("scroll", requestActiveNavUpdate, { passive: true });
+  window.addEventListener("resize", requestActiveNavUpdate);
+  updateActiveNavFromScroll();
 }
 
 function listItems(items) {
   return items.map((item) => `<li>${item}</li>`).join("");
+}
+
+function getContributorContent(contributorKey) {
+  const source = currentLanguage === "en" ? dictionary.en.contributors : null;
+  const koCard = document.querySelector(`[data-contributor="${contributorKey}"]`);
+  const name = readPath(source, `${contributorKey}.name`) || koCard?.querySelector("h2")?.textContent || "";
+  const role = readPath(source, `${contributorKey}.role`) || koCard?.querySelector(".contributor-role")?.textContent || "";
+  const summary = readPath(source, `${contributorKey}.summary`) || koCard?.querySelector("p:last-child")?.textContent || "";
+  const detail = readPath(source, `${contributorKey}.detail`) || `${summary} 구체적인 기여 내용은 추후 업데이트됩니다.`;
+  const label = readPath(source, "modalLabel") || "기여자";
+  const heading = readPath(source, "modalHeading") || "기여 내용";
+  return { name, role, summary, detail, label, heading };
+}
+
+function renderContributorModal(contributorKey) {
+  const modal = document.querySelector("[data-contributor-modal]");
+  const content = getContributorContent(contributorKey);
+  if (!modal || !content.name) return;
+
+  modal.querySelector("[data-contributor-modal-label]").textContent = content.label;
+  modal.querySelector("[data-contributor-modal-name]").textContent = content.name;
+  modal.querySelector("[data-contributor-modal-role]").textContent = content.role;
+  modal.querySelector("[data-contributor-modal-summary]").textContent = content.summary;
+  modal.querySelector("[data-contributor-modal-heading]").textContent = content.heading;
+  modal.querySelector("[data-contributor-modal-detail]").textContent = content.detail;
+}
+
+function openContributorModal(contributorKey) {
+  const modal = document.querySelector("[data-contributor-modal]");
+  const closeButton = modal?.querySelector("[data-contributor-close]");
+  if (!modal) return;
+
+  activeContributor = contributorKey;
+  renderContributorModal(contributorKey);
+  modal.hidden = false;
+  document.body.classList.add("modal-open");
+  closeButton?.focus();
+}
+
+function closeContributorModal() {
+  const modal = document.querySelector("[data-contributor-modal]");
+  if (!modal) return;
+
+  modal.hidden = true;
+  activeContributor = null;
+  document.body.classList.remove("modal-open");
 }
 
 function renderFocusModal(departmentKey) {
@@ -706,6 +848,20 @@ document.querySelectorAll("[data-work-close]").forEach((element) => {
   element.addEventListener("click", closeWorkModal);
 });
 
+document.querySelectorAll("[data-contributor]").forEach((card) => {
+  card.addEventListener("click", () => openContributorModal(card.dataset.contributor));
+  card.addEventListener("keydown", (event) => {
+    if (event.key === "Enter" || event.key === " ") {
+      event.preventDefault();
+      openContributorModal(card.dataset.contributor);
+    }
+  });
+});
+
+document.querySelectorAll("[data-contributor-close]").forEach((element) => {
+  element.addEventListener("click", closeContributorModal);
+});
+
 document.querySelectorAll("[data-photo-modal-trigger]").forEach((link) => {
   link.addEventListener("click", (event) => {
     event.preventDefault();
@@ -736,6 +892,9 @@ document.addEventListener("keydown", (event) => {
   }
   if (event.key === "Escape" && activeWorkArea) {
     closeWorkModal();
+  }
+  if (event.key === "Escape" && activeContributor) {
+    closeContributorModal();
   }
   if (event.key === "Escape" && photoModalOpen) {
     closePhotoModal();

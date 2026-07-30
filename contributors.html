@@ -16,73 +16,89 @@
       <a class="brand" href="./index.html#home" aria-label="한국이주이민연구소 home">
         <span class="brand-mark">KMI</span>
         <span>
-          <strong>Korea Migration Institute · 한국이주이민연구소</strong>
-          <small>이주, 권리, 공동체를 잇는 연구소</small>
+          <strong data-i18n="brand.title">Korea Migration Institute · 한국이주이민연구소</strong>
+          <small data-i18n="brand.subtitle">이주, 권리, 공동체를 잇는 연구소</small>
         </span>
       </a>
       <nav class="main-nav" aria-label="Main navigation">
-        <a href="./index.html#about">소개</a>
-        <a href="./index.html#focus">관련 분야</a>
-        <a href="./index.html#work">활동</a>
-        <a href="./index.html#archive">활동 기록</a>
-        <a href="./index.html#resources">자료</a>
-        <a href="./index.html#contact">연락처</a>
+        <a href="./index.html#about" data-i18n="nav.about">소개</a>
+        <a href="./index.html#focus" data-i18n="nav.focus">관련 분야</a>
+        <a href="./index.html#work" data-i18n="nav.work">활동</a>
+        <a href="./index.html#archive" data-i18n="nav.archive">활동 기록</a>
+        <a href="./index.html#resources" data-i18n="nav.resources">자료</a>
+        <a href="./index.html#contact" data-i18n="nav.contact">연락처</a>
       </nav>
+      <div class="language-toggle" aria-label="Language">
+        <button type="button" class="language-button active" data-lang="ko">KR</button>
+        <button type="button" class="language-button" data-lang="en">EN</button>
+      </div>
     </header>
 
     <main>
       <section class="section contributors-hero">
         <div class="section-heading">
-          <p class="eyebrow">Contributors</p>
-          <h1>기여자</h1>
+          <p class="eyebrow" data-i18n="contributors.eyebrow">Contributors</p>
+          <h1 data-i18n="contributors.title">기여자</h1>
         </div>
-        <p>
+        <p data-i18n="contributors.body">
           한국이주이민연구소의 연구, 교육, 상담 연계, 현장 활동에 함께하는 기여자들을 소개합니다.
         </p>
       </section>
 
       <section class="section contributors-section">
         <div class="contributors-grid">
-          <article class="contributor-card">
+          <article class="contributor-card" role="button" tabindex="0" data-contributor="one" aria-haspopup="dialog">
             <span>01</span>
-            <h2>Contributor Name</h2>
-            <p class="contributor-role">Research · Field Collaboration</p>
-            <p>Contributor description placeholder. Add a short description of the person's work, focus area, and connection to KMI.</p>
+            <h2 data-i18n="contributors.one.name">기여자 이름</h2>
+            <p class="contributor-role" data-i18n="contributors.one.role">연구 · 현장 협력</p>
+            <p data-i18n="contributors.one.summary">한국이주이민연구소의 연구와 현장 사례 정리에 함께하는 기여자입니다.</p>
           </article>
-          <article class="contributor-card">
+          <article class="contributor-card" role="button" tabindex="0" data-contributor="two" aria-haspopup="dialog">
             <span>02</span>
-            <h2>Contributor Name</h2>
-            <p class="contributor-role">Education · Community Program</p>
-            <p>Contributor description placeholder. Add a concise summary of the person's contribution to education or community activities.</p>
+            <h2 data-i18n="contributors.two.name">기여자 이름</h2>
+            <p class="contributor-role" data-i18n="contributors.two.role">교육 · 공동체 프로그램</p>
+            <p data-i18n="contributors.two.summary">이주배경 아동·가족과 지역 공동체 활동을 지원하는 기여자입니다.</p>
           </article>
-          <article class="contributor-card">
+          <article class="contributor-card" role="button" tabindex="0" data-contributor="three" aria-haspopup="dialog">
             <span>03</span>
-            <h2>Contributor Name</h2>
-            <p class="contributor-role">Rights Guidance · Counseling Linkage</p>
-            <p>Contributor description placeholder. Add a short note about relevant rights guidance, interpretation, counseling, or referral work.</p>
+            <h2 data-i18n="contributors.three.name">기여자 이름</h2>
+            <p class="contributor-role" data-i18n="contributors.three.role">권리 안내 · 상담 연계</p>
+            <p data-i18n="contributors.three.summary">체류, 노동, 가족, 교육 관련 정보 안내와 상담 연계에 함께합니다.</p>
           </article>
-          <article class="contributor-card">
+          <article class="contributor-card" role="button" tabindex="0" data-contributor="four" aria-haspopup="dialog">
             <span>04</span>
-            <h2>Contributor Name</h2>
-            <p class="contributor-role">Archive · Documentation</p>
-            <p>Contributor description placeholder. Add a short description of documentation, archive, media, or translation contributions.</p>
+            <h2 data-i18n="contributors.four.name">기여자 이름</h2>
+            <p class="contributor-role" data-i18n="contributors.four.role">기록 · 번역 · 자료화</p>
+            <p data-i18n="contributors.four.summary">활동 기록, 사진 아카이브, 번역과 자료 정리에 기여합니다.</p>
           </article>
-          <article class="contributor-card">
+          <article class="contributor-card" role="button" tabindex="0" data-contributor="five" aria-haspopup="dialog">
             <span>05</span>
-            <h2>Contributor Name</h2>
-            <p class="contributor-role">Community Partnership</p>
-            <p>Contributor description placeholder. Add a concise description of partnership, outreach, or field support.</p>
+            <h2 data-i18n="contributors.five.name">기여자 이름</h2>
+            <p class="contributor-role" data-i18n="contributors.five.role">지역 협력 · 현장 지원</p>
+            <p data-i18n="contributors.five.summary">지역 기관, 가족센터, 학교와의 협력 및 현장 활동을 지원합니다.</p>
           </article>
         </div>
       </section>
     </main>
 
     <footer class="site-footer">
-      <span>© <span id="year"></span> Korea Migration Institute · 한국이주이민연구소</span>
-      <span><a href="./index.html#contact">Contact</a></span>
+      <span>© <span id="year"></span> <span data-i18n="footer.name">Korea Migration Institute · 한국이주이민연구소</span></span>
+      <span><a href="./index.html#contact" data-i18n="nav.contact">연락처</a></span>
     </footer>
-    <script>
-      document.getElementById("year").textContent = new Date().getFullYear();
-    </script>
+    <div class="focus-modal contributor-modal" data-contributor-modal hidden>
+      <div class="focus-modal-backdrop" data-contributor-close></div>
+      <section class="focus-modal-panel contributor-modal-panel" role="dialog" aria-modal="true" aria-labelledby="contributor-modal-title">
+        <button class="focus-modal-close" type="button" data-contributor-close aria-label="Close">×</button>
+        <p class="eyebrow" data-contributor-modal-label>Contributor</p>
+        <h2 id="contributor-modal-title" data-contributor-modal-name></h2>
+        <p class="contributor-modal-role" data-contributor-modal-role></p>
+        <p class="focus-modal-summary" data-contributor-modal-summary></p>
+        <div class="contributor-modal-detail">
+          <h3 data-contributor-modal-heading></h3>
+          <p data-contributor-modal-detail></p>
+        </div>
+      </section>
+    </div>
+    <script defer src="./script.js"></script>
   </body>
 </html>
