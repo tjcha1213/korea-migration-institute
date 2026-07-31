@@ -139,7 +139,7 @@ const dictionary = {
       eyebrow: "Contact",
       title: "Collaboration and inquiries",
       body: "For research collaboration, field case sharing, counseling referrals, or material requests, contact us below.",
-      contributors: "View contributors supporting our research and activities",
+      contributors: "Our Contributors",
     },
     footer: {
       name: "Korea Migration Institute",
