@@ -758,14 +758,14 @@ function getPhotoData(link) {
   const thumbnail = link.querySelector("img");
   return {
     src: link.href,
-    koCaption: thumbnail?.alt || "",
+    koCaption: link.dataset.captionKo || thumbnail?.alt || "",
     enCaption: link.dataset.captionEn || thumbnail?.alt || "",
   };
 }
 
 function getPhotoCaption(photo) {
   if (!photo) return "";
-  return currentLanguage === "en" ? photo.enCaption : photo.koCaption;
+  return document.documentElement.lang === "en" ? photo.enCaption : photo.koCaption;
 }
 
 function renderPhotoModal() {
