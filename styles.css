@@ -736,27 +736,29 @@ h3 {
   bottom: 12px;
   display: flex;
   justify-content: center;
-  gap: 8px;
+  align-items: center;
+  gap: 7px;
   margin-top: -30px;
   pointer-events: none;
 }
 
 .photo-modal-dot {
-  width: 9px;
-  height: 9px;
+  width: 8px;
+  height: 8px;
   padding: 0;
-  border: 1px solid rgba(255, 255, 255, 0.95);
+  border: 0;
   border-radius: 999px;
-  background: rgba(255, 255, 255, 0.44);
-  box-shadow: 0 1px 5px rgba(16, 24, 40, 0.38);
+  background: rgba(255, 255, 255, 0.72);
+  box-shadow: 0 1px 7px rgba(16, 24, 40, 0.34);
   cursor: pointer;
   pointer-events: auto;
-  transition: width 160ms ease, background 160ms ease;
+  transition: width 160ms ease, background 160ms ease, opacity 160ms ease;
 }
 
 .photo-modal-dot.active {
-  width: 24px;
+  width: 26px;
   background: #ffffff;
+  opacity: 1;
 }
 
 .photo-modal-panel figcaption {
