@@ -118,7 +118,10 @@ a {
   transition: color 0.18s ease;
 }
 
-.main-nav a:hover,
+.main-nav a:hover {
+  color: var(--ink);
+}
+
 .main-nav a.active {
   color: var(--ink);
   background: #eef0f3;

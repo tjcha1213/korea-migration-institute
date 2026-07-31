@@ -568,11 +568,17 @@ const observedSections = Array.from(observedSectionMap, ([hash, section]) => ({ 
 let navClickLockHash = "";
 let navClickLockTimer = null;
 
+function clearActiveNavLock() {
+  if (!navClickLockHash) return;
+  navClickLockHash = "";
+  window.clearTimeout(navClickLockTimer);
+}
+
 function lockActiveNav(hash) {
   navClickLockHash = hash;
   window.clearTimeout(navClickLockTimer);
   navClickLockTimer = window.setTimeout(() => {
-    navClickLockHash = "";
+    clearActiveNavLock();
     requestActiveNavUpdate();
   }, 1600);
 }
@@ -585,6 +591,15 @@ navLinks.forEach((link) => {
       lockActiveNav(hash);
     }
   });
+});
+
+window.addEventListener("wheel", clearActiveNavLock, { passive: true });
+window.addEventListener("touchstart", clearActiveNavLock, { passive: true });
+window.addEventListener("keydown", (event) => {
+  if (["ArrowDown", "ArrowUp", "PageDown", "PageUp", "Home", "End", " "].includes(event.key)) {
+    clearActiveNavLock();
+    requestActiveNavUpdate();
+  }
 });
 
 function updateActiveNavFromScroll() {
