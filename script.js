@@ -485,8 +485,7 @@ let activeContributor = null;
 let photoModalOpen = false;
 let activePhotoGroup = [];
 let activePhotoIndex = 0;
-let photoPointerStartX = null;
-let photoWheelLocked = false;
+let photoSnapTimer = null;
 
 i18nNodes.forEach((node) => {
   originals.set(node, node.textContent);
@@ -762,17 +761,34 @@ function getPhotoData(link) {
 
 function renderPhotoModal() {
   const modal = document.querySelector("[data-photo-modal]");
-  const image = modal?.querySelector("[data-photo-modal-image]");
+  const track = modal?.querySelector("[data-photo-modal-track]");
   const caption = modal?.querySelector("[data-photo-modal-caption]");
   const dots = modal?.querySelector("[data-photo-modal-dots]");
   const arrows = modal?.querySelectorAll("[data-photo-prev], [data-photo-next]");
-  if (!modal || !(image instanceof HTMLImageElement)) return;
+  if (!modal || !(track instanceof HTMLElement)) return;
 
   const photo = activePhotoGroup[activePhotoIndex];
   if (!photo) return;
 
-  image.src = photo.src;
-  image.alt = photo.alt;
+  track.innerHTML = "";
+  activePhotoGroup.forEach((item, index) => {
+    const slide = document.createElement("button");
+    slide.type = "button";
+    slide.className = "photo-modal-slide";
+    slide.setAttribute("aria-label", `Show archive photo ${index + 1}`);
+    slide.addEventListener("click", () => openPhotoAt(index));
+
+    const image = document.createElement("img");
+    image.src = item.src;
+    image.alt = item.alt;
+    slide.append(image);
+    track.append(slide);
+  });
+
+  requestAnimationFrame(() => {
+    track.scrollTo({ left: track.clientWidth * activePhotoIndex, behavior: "auto" });
+  });
+
   if (caption) {
     caption.textContent = photo.alt;
   }
@@ -788,19 +804,48 @@ function renderPhotoModal() {
       dot.className = "photo-modal-dot";
       dot.setAttribute("aria-label", `Show photo ${index + 1}`);
       dot.classList.toggle("active", index === activePhotoIndex);
-      dot.addEventListener("click", () => {
-        activePhotoIndex = index;
-        renderPhotoModal();
-      });
+      dot.addEventListener("click", () => openPhotoAt(index));
       dots.append(dot);
     });
   }
+  syncPhotoModalControls();
+}
+
+function syncPhotoModalControls() {
+  const modal = document.querySelector("[data-photo-modal]");
+  const caption = modal?.querySelector("[data-photo-modal-caption]");
+  const dots = modal?.querySelectorAll(".photo-modal-dot");
+  const prev = modal?.querySelector("[data-photo-prev]");
+  const next = modal?.querySelector("[data-photo-next]");
+  const photo = activePhotoGroup[activePhotoIndex];
+
+  if (caption && photo) {
+    caption.textContent = photo.alt;
+  }
+  dots?.forEach((dot, index) => {
+    dot.classList.toggle("active", index === activePhotoIndex);
+  });
+  if (prev instanceof HTMLButtonElement) {
+    prev.disabled = activePhotoIndex === 0;
+  }
+  if (next instanceof HTMLButtonElement) {
+    next.disabled = activePhotoIndex === activePhotoGroup.length - 1;
+  }
+}
+
+function openPhotoAt(index, behavior = "smooth") {
+  const track = document.querySelector("[data-photo-modal-track]");
+  if (!(track instanceof HTMLElement)) return;
+
+  const nextIndex = Math.max(0, Math.min(activePhotoGroup.length - 1, index));
+  activePhotoIndex = nextIndex;
+  syncPhotoModalControls();
+  track.scrollTo({ left: track.clientWidth * nextIndex, behavior });
 }
 
 function stepPhotoModal(direction) {
   if (activePhotoGroup.length <= 1) return;
-  activePhotoIndex = (activePhotoIndex + direction + activePhotoGroup.length) % activePhotoGroup.length;
-  renderPhotoModal();
+  openPhotoAt(activePhotoIndex + direction);
 }
 
 function openPhotoModal(link) {
@@ -821,7 +866,7 @@ function openPhotoModal(link) {
 
 function closePhotoModal() {
   const modal = document.querySelector("[data-photo-modal]");
-  const image = modal?.querySelector("[data-photo-modal-image]");
+  const track = modal?.querySelector("[data-photo-modal-track]");
   const dots = modal?.querySelector("[data-photo-modal-dots]");
   if (!modal) return;
 
@@ -829,11 +874,12 @@ function closePhotoModal() {
   photoModalOpen = false;
   activePhotoGroup = [];
   activePhotoIndex = 0;
-  photoPointerStartX = null;
-  photoWheelLocked = false;
-  if (image instanceof HTMLImageElement) {
-    image.removeAttribute("src");
-    image.alt = "";
+  if (photoSnapTimer !== null) {
+    window.clearTimeout(photoSnapTimer);
+    photoSnapTimer = null;
+  }
+  if (track instanceof HTMLElement) {
+    track.innerHTML = "";
   }
   if (dots) {
     dots.innerHTML = "";
@@ -919,54 +965,33 @@ document.querySelectorAll("[data-photo-close]").forEach((element) => {
 document.querySelector("[data-photo-prev]")?.addEventListener("click", () => stepPhotoModal(-1));
 document.querySelector("[data-photo-next]")?.addEventListener("click", () => stepPhotoModal(1));
 
-function startPhotoSwipe(clientX) {
-  photoPointerStartX = clientX;
-}
-
-function finishPhotoSwipe(clientX) {
-  if (photoPointerStartX === null) return;
-  const distance = clientX - photoPointerStartX;
-  photoPointerStartX = null;
-  if (Math.abs(distance) < 48) return;
-  stepPhotoModal(distance < 0 ? 1 : -1);
-}
-
 const photoModalPanel = document.querySelector("[data-photo-modal] .photo-modal-panel");
+const photoModalTrack = document.querySelector("[data-photo-modal-track]");
 
-photoModalPanel?.addEventListener("pointerdown", (event) => {
-  if (event.target.closest("button")) return;
-  startPhotoSwipe(event.clientX);
-  photoModalPanel.setPointerCapture?.(event.pointerId);
-});
+photoModalTrack?.addEventListener("scroll", (event) => {
+  if (!activePhotoGroup.length) return;
+  const track = event.currentTarget;
+  if (!(track instanceof HTMLElement)) return;
 
-photoModalPanel?.addEventListener("pointerup", (event) => {
-  finishPhotoSwipe(event.clientX);
-  photoModalPanel.releasePointerCapture?.(event.pointerId);
-});
+  const width = Math.max(track.clientWidth, 1);
+  const nextIndex = Math.max(0, Math.min(activePhotoGroup.length - 1, Math.round(track.scrollLeft / width)));
+  if (activePhotoIndex !== nextIndex) {
+    activePhotoIndex = nextIndex;
+    syncPhotoModalControls();
+  }
 
-photoModalPanel?.addEventListener("pointercancel", () => {
-  photoPointerStartX = null;
+  if (photoSnapTimer !== null) window.clearTimeout(photoSnapTimer);
+  photoSnapTimer = window.setTimeout(() => {
+    const settledIndex = Math.max(0, Math.min(activePhotoGroup.length - 1, Math.round(track.scrollLeft / width)));
+    const targetLeft = settledIndex * width;
+    if (Math.abs(track.scrollLeft - targetLeft) > 1) {
+      track.scrollTo({ left: targetLeft, behavior: "smooth" });
+    }
+  }, 90);
 });
 
 photoModalPanel?.addEventListener("dragstart", (event) => {
   event.preventDefault();
-});
-
-photoModalPanel?.addEventListener("wheel", (event) => {
-  if (activePhotoGroup.length <= 1) return;
-  if (Math.abs(event.deltaX) <= Math.abs(event.deltaY) || Math.abs(event.deltaX) < 28) return;
-
-  event.preventDefault();
-  if (photoWheelLocked) return;
-  photoWheelLocked = true;
-  stepPhotoModal(event.deltaX > 0 ? 1 : -1);
-  window.setTimeout(() => {
-    photoWheelLocked = false;
-  }, 420);
-}, { passive: false });
-
-document.addEventListener("mouseup", (event) => {
-  finishPhotoSwipe(event.clientX);
 });
 
 document.addEventListener("keydown", (event) => {
