@@ -720,6 +720,46 @@ h3 {
   right: 22px;
 }
 
+.photo-modal-arrow {
+  position: absolute;
+  top: 50%;
+  z-index: 2;
+  display: grid;
+  place-items: center;
+  width: 48px;
+  height: 48px;
+  border: 1px solid rgba(255, 255, 255, 0.72);
+  border-radius: 999px;
+  background: rgba(15, 23, 42, 0.58);
+  color: #fff;
+  font-size: 36px;
+  line-height: 1;
+  box-shadow: 0 14px 34px rgba(16, 24, 40, 0.28);
+  cursor: pointer;
+  transform: translateY(-50%);
+  transition: background 160ms ease, transform 160ms ease, box-shadow 160ms ease;
+}
+
+.photo-modal-arrow:hover,
+.photo-modal-arrow:focus-visible {
+  background: rgba(15, 23, 42, 0.78);
+  box-shadow: 0 18px 44px rgba(16, 24, 40, 0.34);
+  outline: none;
+  transform: translateY(-50%) scale(1.04);
+}
+
+.photo-modal-arrow[hidden] {
+  display: none;
+}
+
+.photo-modal-arrow-left {
+  left: 28px;
+}
+
+.photo-modal-arrow-right {
+  right: 28px;
+}
+
 .resource-list {
   border-top: 2px solid var(--ink);
 }
@@ -777,15 +817,27 @@ h3 {
   align-items: center;
   justify-content: center;
   width: fit-content;
-  min-height: 42px;
-  margin-top: 2px;
+  min-height: 46px;
+  margin-top: 6px;
   margin-bottom: 0;
-  padding: 0 16px;
-  border: 1px solid var(--ink);
+  padding: 0 20px;
+  border: 1px solid rgba(16, 24, 40, 0.9);
+  border-radius: 999px;
   background: var(--ink);
   color: #fff;
   font-size: 14px;
   font-weight: 850;
+  box-shadow: 0 14px 30px rgba(16, 24, 40, 0.14);
+  transition: transform 160ms ease, box-shadow 160ms ease, background 160ms ease;
+}
+
+.contact-panel .contact-button:hover,
+.contact-panel .contact-button:focus-visible {
+  background: #0f172a;
+  color: #fff;
+  box-shadow: 0 18px 38px rgba(16, 24, 40, 0.2);
+  transform: translateY(-1px);
+  outline: none;
 }
 
 .site-footer {
@@ -1220,6 +1272,21 @@ h3 {
 
   .photo-modal-close {
     top: 14px;
+    right: 14px;
+  }
+
+  .photo-modal-arrow {
+    width: 40px;
+    height: 40px;
+    font-size: 30px;
+    background: rgba(15, 23, 42, 0.62);
+  }
+
+  .photo-modal-arrow-left {
+    left: 14px;
+  }
+
+  .photo-modal-arrow-right {
     right: 14px;
   }
 

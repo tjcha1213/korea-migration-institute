@@ -764,6 +764,7 @@ function renderPhotoModal() {
   const image = modal?.querySelector("[data-photo-modal-image]");
   const caption = modal?.querySelector("[data-photo-modal-caption]");
   const dots = modal?.querySelector("[data-photo-modal-dots]");
+  const arrows = modal?.querySelectorAll("[data-photo-prev], [data-photo-next]");
   if (!modal || !(image instanceof HTMLImageElement)) return;
 
   const photo = activePhotoGroup[activePhotoIndex];
@@ -774,6 +775,9 @@ function renderPhotoModal() {
   if (caption) {
     caption.textContent = photo.alt;
   }
+  arrows?.forEach((arrow) => {
+    arrow.hidden = activePhotoGroup.length <= 1;
+  });
   if (dots) {
     dots.innerHTML = "";
     dots.hidden = activePhotoGroup.length <= 1;
@@ -909,6 +913,9 @@ document.querySelectorAll("[data-photo-modal-trigger]").forEach((link) => {
 document.querySelectorAll("[data-photo-close]").forEach((element) => {
   element.addEventListener("click", closePhotoModal);
 });
+
+document.querySelector("[data-photo-prev]")?.addEventListener("click", () => stepPhotoModal(-1));
+document.querySelector("[data-photo-next]")?.addEventListener("click", () => stepPhotoModal(1));
 
 document.querySelector("[data-photo-modal] .photo-modal-panel")?.addEventListener("touchstart", (event) => {
   photoTouchStartX = event.touches[0]?.clientX ?? null;
