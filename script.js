@@ -486,6 +486,7 @@ let photoModalOpen = false;
 let activePhotoGroup = [];
 let activePhotoIndex = 0;
 let photoPointerStartX = null;
+let photoWheelLocked = false;
 
 i18nNodes.forEach((node) => {
   originals.set(node, node.textContent);
@@ -829,6 +830,7 @@ function closePhotoModal() {
   activePhotoGroup = [];
   activePhotoIndex = 0;
   photoPointerStartX = null;
+  photoWheelLocked = false;
   if (image instanceof HTMLImageElement) {
     image.removeAttribute("src");
     image.alt = "";
@@ -917,17 +919,54 @@ document.querySelectorAll("[data-photo-close]").forEach((element) => {
 document.querySelector("[data-photo-prev]")?.addEventListener("click", () => stepPhotoModal(-1));
 document.querySelector("[data-photo-next]")?.addEventListener("click", () => stepPhotoModal(1));
 
-document.querySelector("[data-photo-modal] .photo-modal-panel")?.addEventListener("pointerdown", (event) => {
-  if (event.target.closest("button")) return;
-  photoPointerStartX = event.clientX;
-});
+function startPhotoSwipe(clientX) {
+  photoPointerStartX = clientX;
+}
 
-document.querySelector("[data-photo-modal] .photo-modal-panel")?.addEventListener("pointerup", (event) => {
+function finishPhotoSwipe(clientX) {
   if (photoPointerStartX === null) return;
-  const distance = event.clientX - photoPointerStartX;
+  const distance = clientX - photoPointerStartX;
   photoPointerStartX = null;
   if (Math.abs(distance) < 48) return;
   stepPhotoModal(distance < 0 ? 1 : -1);
+}
+
+const photoModalPanel = document.querySelector("[data-photo-modal] .photo-modal-panel");
+
+photoModalPanel?.addEventListener("pointerdown", (event) => {
+  if (event.target.closest("button")) return;
+  startPhotoSwipe(event.clientX);
+  photoModalPanel.setPointerCapture?.(event.pointerId);
+});
+
+photoModalPanel?.addEventListener("pointerup", (event) => {
+  finishPhotoSwipe(event.clientX);
+  photoModalPanel.releasePointerCapture?.(event.pointerId);
+});
+
+photoModalPanel?.addEventListener("pointercancel", () => {
+  photoPointerStartX = null;
+});
+
+photoModalPanel?.addEventListener("dragstart", (event) => {
+  event.preventDefault();
+});
+
+photoModalPanel?.addEventListener("wheel", (event) => {
+  if (activePhotoGroup.length <= 1) return;
+  if (Math.abs(event.deltaX) <= Math.abs(event.deltaY) || Math.abs(event.deltaX) < 28) return;
+
+  event.preventDefault();
+  if (photoWheelLocked) return;
+  photoWheelLocked = true;
+  stepPhotoModal(event.deltaX > 0 ? 1 : -1);
+  window.setTimeout(() => {
+    photoWheelLocked = false;
+  }, 420);
+}, { passive: false });
+
+document.addEventListener("mouseup", (event) => {
+  finishPhotoSwipe(event.clientX);
 });
 
 document.addEventListener("keydown", (event) => {

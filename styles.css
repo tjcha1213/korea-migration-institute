@@ -688,6 +688,11 @@ h3 {
   box-shadow: 0 34px 90px rgba(16, 24, 40, 0.24);
   touch-action: pan-y;
   user-select: none;
+  cursor: grab;
+}
+
+.photo-modal-panel:active {
+  cursor: grabbing;
 }
 
 .photo-modal-panel img {
