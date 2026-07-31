@@ -522,6 +522,9 @@ function setLanguage(language) {
   if (activeContributor) {
     renderContributorModal(activeContributor);
   }
+  if (photoModalOpen) {
+    renderPhotoModal();
+  }
 }
 
 buttons.forEach((button) => {
@@ -755,8 +758,14 @@ function getPhotoData(link) {
   const thumbnail = link.querySelector("img");
   return {
     src: link.href,
-    alt: thumbnail?.alt || "",
+    koCaption: thumbnail?.alt || "",
+    enCaption: link.dataset.captionEn || thumbnail?.alt || "",
   };
+}
+
+function getPhotoCaption(photo) {
+  if (!photo) return "";
+  return currentLanguage === "en" ? photo.enCaption : photo.koCaption;
 }
 
 function renderPhotoModal() {
@@ -780,7 +789,7 @@ function renderPhotoModal() {
 
     const image = document.createElement("img");
     image.src = item.src;
-    image.alt = item.alt;
+    image.alt = getPhotoCaption(item);
     slide.append(image);
     track.append(slide);
   });
@@ -790,7 +799,7 @@ function renderPhotoModal() {
   });
 
   if (caption) {
-    caption.textContent = photo.alt;
+    caption.textContent = getPhotoCaption(photo);
   }
   arrows?.forEach((arrow) => {
     arrow.hidden = activePhotoGroup.length <= 1;
@@ -820,7 +829,7 @@ function syncPhotoModalControls() {
   const photo = activePhotoGroup[activePhotoIndex];
 
   if (caption && photo) {
-    caption.textContent = photo.alt;
+    caption.textContent = getPhotoCaption(photo);
   }
   dots?.forEach((dot, index) => {
     dot.classList.toggle("active", index === activePhotoIndex);
