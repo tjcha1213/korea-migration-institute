@@ -485,7 +485,7 @@ let activeContributor = null;
 let photoModalOpen = false;
 let activePhotoGroup = [];
 let activePhotoIndex = 0;
-let photoTouchStartX = null;
+let photoPointerStartX = null;
 
 i18nNodes.forEach((node) => {
   originals.set(node, node.textContent);
@@ -828,7 +828,7 @@ function closePhotoModal() {
   photoModalOpen = false;
   activePhotoGroup = [];
   activePhotoIndex = 0;
-  photoTouchStartX = null;
+  photoPointerStartX = null;
   if (image instanceof HTMLImageElement) {
     image.removeAttribute("src");
     image.alt = "";
@@ -917,15 +917,15 @@ document.querySelectorAll("[data-photo-close]").forEach((element) => {
 document.querySelector("[data-photo-prev]")?.addEventListener("click", () => stepPhotoModal(-1));
 document.querySelector("[data-photo-next]")?.addEventListener("click", () => stepPhotoModal(1));
 
-document.querySelector("[data-photo-modal] .photo-modal-panel")?.addEventListener("touchstart", (event) => {
-  photoTouchStartX = event.touches[0]?.clientX ?? null;
+document.querySelector("[data-photo-modal] .photo-modal-panel")?.addEventListener("pointerdown", (event) => {
+  if (event.target.closest("button")) return;
+  photoPointerStartX = event.clientX;
 });
 
-document.querySelector("[data-photo-modal] .photo-modal-panel")?.addEventListener("touchend", (event) => {
-  if (photoTouchStartX === null) return;
-  const touchEndX = event.changedTouches[0]?.clientX ?? photoTouchStartX;
-  const distance = touchEndX - photoTouchStartX;
-  photoTouchStartX = null;
+document.querySelector("[data-photo-modal] .photo-modal-panel")?.addEventListener("pointerup", (event) => {
+  if (photoPointerStartX === null) return;
+  const distance = event.clientX - photoPointerStartX;
+  photoPointerStartX = null;
   if (Math.abs(distance) < 48) return;
   stepPhotoModal(distance < 0 ? 1 : -1);
 });

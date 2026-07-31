@@ -686,6 +686,8 @@ h3 {
   border: 1px solid var(--line);
   border-radius: 30px;
   box-shadow: 0 34px 90px rgba(16, 24, 40, 0.24);
+  touch-action: pan-y;
+  user-select: none;
 }
 
 .photo-modal-panel img {
@@ -695,6 +697,7 @@ h3 {
   object-fit: contain;
   border-radius: 22px;
   background: var(--soft);
+  -webkit-user-drag: none;
 }
 
 .photo-modal-dots {
