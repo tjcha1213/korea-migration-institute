@@ -556,10 +556,6 @@ function setActiveNav(hash) {
   });
 }
 
-navLinks.forEach((link) => {
-  link.addEventListener("click", () => setActiveNav(getNavHash(link)));
-});
-
 const observedSectionMap = new Map();
 navLinks.forEach((link) => {
   const hash = getNavHash(link);
@@ -569,9 +565,35 @@ navLinks.forEach((link) => {
   }
 });
 const observedSections = Array.from(observedSectionMap, ([hash, section]) => ({ hash, section }));
+let navClickLockHash = "";
+let navClickLockTimer = null;
+
+function lockActiveNav(hash) {
+  navClickLockHash = hash;
+  window.clearTimeout(navClickLockTimer);
+  navClickLockTimer = window.setTimeout(() => {
+    navClickLockHash = "";
+    requestActiveNavUpdate();
+  }, 1600);
+}
+
+navLinks.forEach((link) => {
+  link.addEventListener("click", () => {
+    const hash = getNavHash(link);
+    setActiveNav(hash);
+    if (getNavSection(link)) {
+      lockActiveNav(hash);
+    }
+  });
+});
 
 function updateActiveNavFromScroll() {
   if (!observedSections.length) return;
+  if (navClickLockHash) {
+    setActiveNav(navClickLockHash);
+    return;
+  }
+
   const headerHeight = document.querySelector(".site-header")?.offsetHeight || 0;
   const activationOffset = headerHeight + Math.min(140, window.innerHeight * 0.22);
   const scrollTop = window.scrollY || document.documentElement.scrollTop || 0;

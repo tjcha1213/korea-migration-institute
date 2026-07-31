@@ -115,7 +115,7 @@ a {
 .main-nav a {
   padding: 8px 10px;
   border-radius: 999px;
-  transition: background 0.18s ease, color 0.18s ease;
+  transition: color 0.18s ease;
 }
 
 .main-nav a:hover,
