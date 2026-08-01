@@ -147,6 +147,8 @@ const dictionary = {
       contributors: "Contributors",
     },
     contributors: {
+      backMain: "← Back to Main Page",
+      backContact: "Back to Contact",
       eyebrow: "Contributors",
       title: "Contributors",
       body: "Meet the people contributing to Korea Migration Institute's research, education, counseling referrals, field practice, and documentation.",

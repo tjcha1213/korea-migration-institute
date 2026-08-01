@@ -937,6 +937,25 @@ h3 {
   padding-bottom: 36px;
 }
 
+.contributors-back-link {
+  display: inline-flex;
+  align-items: center;
+  width: fit-content;
+  margin-bottom: 18px;
+  color: var(--muted);
+  font-size: 14px;
+  font-weight: 800;
+  line-height: 1.2;
+  transition: color 160ms ease, transform 160ms ease;
+}
+
+.contributors-back-link:hover,
+.contributors-back-link:focus-visible {
+  color: var(--ink);
+  outline: none;
+  transform: translateX(-2px);
+}
+
 .contributors-hero h1 {
   margin: 0;
   font-size: clamp(42px, 8vw, 86px);
