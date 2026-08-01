@@ -1379,12 +1379,12 @@ h3 {
   }
 
   .photo-modal-panel figcaption {
-    top: 18px;
-    left: 18px;
-    max-width: calc(100% - 76px);
-    padding: 8px 12px;
-    font-size: 12px;
-    line-height: 1.35;
+    top: 16px;
+    left: 16px;
+    max-width: calc(100% - 86px);
+    padding: 6px 9px;
+    font-size: 10.5px;
+    line-height: 1.28;
   }
 
   .photo-modal-close {
