@@ -862,7 +862,7 @@ h3 {
   align-items: start;
 }
 
-.contact-copy p {
+.contact-copy p:not(.eyebrow) {
   margin-bottom: 0;
   color: var(--muted);
   font-size: 18px;
